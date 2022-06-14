@@ -1,5 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "../node_modules/swiper/swiper-bundle.css";
+
+/* ===================================================
+SWIPER
+====================================================*/
+
+.swiper {
+    width: 18rem;
+    height: auto;
+}
+
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+/* ===================================================
+SWIPER
+====================================================*/
+
 .bg-primario {
     background: #344A96;
 }
