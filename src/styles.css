@@ -1,29 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "../node_modules/swiper/swiper-bundle.css";
-
-/* ===================================================
-SWIPER
-====================================================*/
-
-.swiper {
-    width: 18rem;
-    height: auto;
-}
-
-.swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 2rem;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-
-
-/* ===================================================
-SWIPER
-====================================================*/
-
 .bg-primario {
     background: #344A96;
 }
@@ -56,6 +33,14 @@ SWIPER
     color: #76C043;
 }
 
+.text-white-75 {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.text-white-50 {
+    color: rgba(255, 255, 255, 0.5);
+}
+
 .border-primario {
     border: #344A96 solid !important;
 }
@@ -70,6 +55,38 @@ SWIPER
 
 .border-cuarto {
     border: #76C043 solid !important;
+}
+
+.border-top-primario {
+    border-top: #344A96 solid 6px !important;
+}
+
+.border-top-tercero {
+    border-top: #499ED7 solid 6px !important;
+}
+
+.border-top-segundario {
+    border-top: #19A14C solid 6px !important;
+}
+
+.border-top-cuarto {
+    border-top: #76C043 solid 6px !important;
+}
+
+.border-left-primario {
+    border-left: #344A96 solid 3px !important;
+}
+
+.border-left-tercero {
+    border-left: #499ED7 solid 3px !important;
+}
+
+.border-left-segundario {
+    border-left: #19A14C solid 3px !important;
+}
+
+.border-left-cuarto {
+    border-left: #76C043 solid 3px !important;
 }
 
 .title-section {

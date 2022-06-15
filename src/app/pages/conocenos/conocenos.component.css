@@ -1,0 +1,35 @@
+.intro-conocenos {
+    background-image: url('../../../assets/img/conocenos/conocenos.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 500px;
+}
+
+@media (max-width: 500px) {
+    .intro-conocenos {
+        background-image: url('../../../assets/img/conocenos/conocenos-mobile.webp');
+    }
+}
+
+
+/* ===================================================
+SWIPER
+====================================================*/
+
+.swiper {
+    width: 18rem;
+    height: auto;
+}
+
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+/* ===================================================
+SWIPER
+====================================================*/
