@@ -1,0 +1,58 @@
+<section class="" style="min-height: 75vh;">
+    <div class="d-flex justify-content-center align-item-center ">
+        <div class="my-5 col-md-6">
+
+            <div class="border px-4 py-5">
+
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="registerForm" (ngSubmit)="registro()">
+                        <img class="mb-4" src="../../../assets/img/logo/logo.webp" alt="" height="57">
+                        <h1 class="h3 mb-3 fw-normal">Registrarme</h1>
+
+                        <div class="form-floating ">
+                            <input formControlName="name" [ngClass]="{'is-invalid': validateForm('name')}" type="text" class="form-control" id="floatingInputName" placeholder="Nombres">
+                            <label for="floatingInputName">Nombres</label>
+                        </div>
+
+                        <div class="form-floating">
+                            <input formControlName="email" [ngClass]="{'is-invalid': validateForm('email')}" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Email</label>
+                        </div>
+
+                        <div class="form-floating">
+                            <input formControlName="password" [ngClass]="{'is-invalid': validateForm('password')}" type="password" class="form-control" id="floatingPassword" placeholder="Contraseña">
+                            <label for="floatingPassword">Contraseña</label>
+                        </div>
+
+                        <div class="form-floating">
+                            <input formControlName="repassword" [ngClass]="{'is-invalid': validateForm('repassword')}" type="password" class="form-control" id="floatingPassword2" placeholder="Repetir Contraseña">
+                            <label for="floatingPassword2">Repetir Contraseña</label>
+                        </div>
+
+                        <div class="form-check mt-2">
+                            <input formControlName="terminos" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                <small>
+                                    Acepto los <a href="" class="text-info">Términos de servicio</a>  y la <a href="" class="text-info">Política de privacidad</a>. También acepto que solo crearé una cuenta.
+                                </small>
+                            </label>
+
+                        </div>
+
+                        <div *ngIf="validateForm('terminos')" class="text-danger">
+                            <small>** Debes de aceptar todos los terminos y politicas de privacidad </small>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary mt-4" [disabled]="btnSubmit" type="submit">Registrarme</button>
+
+                    </form>
+
+                    <a routerLink="/portal/trabajadores" class="">Ya tengo cuenta</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
