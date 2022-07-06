@@ -1,0 +1,42 @@
+<section class="" style="min-height: 75vh;">
+    <div class="d-flex justify-content-center align-item-center ">
+        <div class="my-5 col-md-6">
+            <h2>TRABAJADORES</h2>
+
+            <div class="border px-4 py-5">
+
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()">
+                        <img class="mb-4" src="../../../assets/img/logo/logo.webp" alt="" height="57">
+                        <h1 class="h3 mb-3 fw-normal">Inicia session</h1>
+
+                        <div class="form-floating">
+                            <input formControlName="email" type="email" [ngClass]="{'is-invalid': validate('email')}" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Email</label>
+                        </div>
+                        <div class="form-floating">
+                            <input formControlName="password" type="password" [ngClass]="{'is-invalid': validate('password')}" class="form-control" id="floatingPassword" placeholder="Contraseña">
+                            <label for="floatingPassword">Contraseña</label>
+                        </div>
+
+                        <div class="checkbox mb-3">
+                            <label>
+                            <input type="checkbox" value="remember-me" formControlName="remember" [checked]="remember"> Recuerdame
+                          </label>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
+
+
+
+                    </form>
+
+                    <a routerLink="/registrarse" class=""> Crear cuenta nueva</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>

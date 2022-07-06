@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import Swal from 'sweetalert2';
 
 // SERVICES
 import { WorkerService } from 'src/app/services/worker.service';
@@ -11,7 +14,8 @@ import { WorkerService } from 'src/app/services/worker.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(  private fb: FormBuilder,
+  constructor(  private router: Router,
+                private fb: FormBuilder,
                 private workerService: WorkerService) { }
 
   ngOnInit(): void {
@@ -36,6 +40,7 @@ export class RegisterComponent implements OnInit {
 
   registro(){
 
+    this.valuePass = false;            
     this.btnSubmit = true;
     this.formSubmited = true;
 
@@ -44,12 +49,24 @@ export class RegisterComponent implements OnInit {
       return;
     }
     
-    if (this.registerForm.value.password != this.registerForm.value.password) {
-            
+    if (this.registerForm.value.password != this.registerForm.value.repassword) {
+      this.valuePass = true;            
       this.btnSubmit = false;
       return;
     }
 
+    this.workerService.createWorker(this.registerForm.value)
+        .subscribe( ({ worker }) => {
+
+          Swal.fire('Estupendo', `Se ha registrado correctamente en nuestro portal de trabajadores`, 'success');
+          this.router.navigateByUrl('/portal/trabajadores');
+          
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+          
+        });
 
 
   }

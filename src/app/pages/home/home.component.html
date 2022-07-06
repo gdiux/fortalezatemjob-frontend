@@ -209,10 +209,11 @@
 
         <!-- SLIDER -->
         <div class="d-flex justify-content-center align-items-center mx-auto">
+
             <swiper [config]="config" [effect]="'cards'" [autoplay]="{delay: 1500, disableOnInteraction: false }" class="mySwiper">
 
-                <ng-template swiperSlide>
-                    <div class="card py-4 border-0 shadow " style="width: 18rem; border-radius: 2rem; ">
+                <ng-template swiperSlide style="border-radius: 2rem;">
+                    <div class="card py-4 border-0 shadow " style="width: 18rem;  ">
                         <div class="text-center ">
                             <h3 class="display-1 text-primario">1</h3>
                         </div>
@@ -225,7 +226,7 @@
                 </ng-template>
 
                 <ng-template swiperSlide>
-                    <div class="card py-4 border-0 bg-primario  shadow " style="width: 18rem; border-radius: 2rem; ">
+                    <div class="card py-4 border-0 bg-primario  shadow " style="width: 18rem;  ">
                         <div class="text-center ">
                             <h3 class="display-1 text-white">2</h3>
                         </div>
@@ -238,7 +239,7 @@
                 </ng-template>
 
                 <ng-template swiperSlide>
-                    <div class="card py-4 border-0 bg-tercero  shadow " style="width: 18rem; border-radius: 2rem; ">
+                    <div class="card py-4 border-0 bg-tercero  shadow " style="width: 18rem;  ">
                         <div class="text-center ">
                             <h3 class="display-1 text-white">3</h3>
                         </div>

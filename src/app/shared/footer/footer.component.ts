@@ -14,6 +14,10 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
     
+    // PARALLAX FOOTER
+    let footer:any = document.querySelector('footer');
+    document.querySelector('.contenido')?.setAttribute('style', `margin-bottom:${footer.offsetHeight}px; position: relative; background: #fff;`);
+    
 
   }
 
