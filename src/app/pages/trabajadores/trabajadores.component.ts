@@ -1,6 +1,8 @@
 import { Component, NgZone, OnInit} from '@angular/core';
 
 import { Router } from '@angular/router';
+import { Validators, FormBuilder } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 // MODELS
 import { Worker } from 'src/app/models/worker.model';
@@ -9,9 +11,8 @@ import { Worker } from 'src/app/models/worker.model';
 import { WorkerService } from '../../services/worker.service';
 
 import { environment } from '../../../environments/environment';
-import Swal from 'sweetalert2';
-import { Validators, FormBuilder } from '@angular/forms';
-const base_url = environment.base_url;
+
+const local_url = environment.local_url;
 
 declare const gapi:any;
 
@@ -74,7 +75,7 @@ export class TrabajadoresComponent implements OnInit {
 
           // INGRESAR
           this.ngZone.run( () => {
-            this.router.navigateByUrl('/dashboard');
+            window.location.href = `${local_url}/dashboard`
           });
 
         });
