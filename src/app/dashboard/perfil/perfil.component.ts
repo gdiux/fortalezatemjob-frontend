@@ -115,24 +115,18 @@ export class PerfilComponent implements OnInit {
     if (!this.subirArchivo) {  
       return this.file!.nativeElement.value = '';       
     }
-    
-    // let fileTemp = this.subirArchivo;
 
-    
-    
     let verExt = this.subirArchivo.name.split('.');
     let ext = verExt[verExt.length - 1];
     this.desc = 'archivo';
-    console.log(ext);
     
     // VALID EXT
-    const archExt = ['pdf', 'doc', 'xlsx'];
+    const archExt = ['pdf', 'docx', 'xlsx'];
 
     if (!archExt.includes(ext)) {
       Swal.fire('Atención', 'Solo se permiten archivos PDF - Word - Excel', 'warning');
       return this.file!.nativeElement.value = '';
     }
-
        
     // FIN DE CAMBIAR IMAGEN
   }
@@ -149,9 +143,6 @@ export class PerfilComponent implements OnInit {
     
     this.fileUploadService.updateImage( this.subirArchivo, 'archivos', this.worker.wid!, this.desc)
     .then( data => {  
-      
-      console.log(data);
-      
 
       if (data.ok === false) {
         Swal.fire('Error', data.msg, 'error');
