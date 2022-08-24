@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'https://fortalezatemjob.ddns.net/api',
-  local_url: 'https://fortalezatemjob.ddns.net',
+  base_url: 'https://grupofortalezasas.com/api',
+  local_url: 'https://grupofortalezasas.com',
 };
 
 /*
