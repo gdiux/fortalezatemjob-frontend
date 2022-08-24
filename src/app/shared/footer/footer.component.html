@@ -1,4 +1,12 @@
 <!-- Dark footer -->
+<div *ngIf="!cookie" class="container-fluid py-2 bg-dark opacity-75 fixed-bottom" style=" z-index: 50;">
+    <div class="mx-auto">
+        <p class="text-break text-white mb-0 fw-normal text-center">
+            Este sitio web utiliza cookies propias y de terceros para ofrecerle una mejor experiencia y servicio
+            <br> Al navegar o utilizar nuestros servicios, acepta nuestro uso de cookies.
+            <button type="button" (click)="acceptCokies()" class="btn btn-sm btn-outline-light rounded-pill">Yo acepto</button></p>
+    </div>
+</div>
 <footer class="bg-primario pt-5 w-100" style="bottom: 0; position: fixed; z-index: -1;">
 
     <div class="container">
