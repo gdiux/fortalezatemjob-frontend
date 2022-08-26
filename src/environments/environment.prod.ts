@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  base_url: 'http://localhost:3000/api',
-  local_url: 'http://localhost',
+  base_url: 'https://grupofortalezasas.com/api',
+  local_url: 'https://grupofortalezasas.com',
 };
