@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
+import { Worker } from '../models/worker.model';
 const base_url = environment.base_url;
 
 @Injectable({
@@ -36,11 +37,36 @@ export class FileUploadService {
   async updateImage(
     archivo: File,
     type: 'worker' | 'archivos' ,
-    id: string,
-    desc: 'archivo' | 'img' 
   ){
       
-      const url = `${base_url}/uploads/${type}/${id}?desc=${desc}`;
+      const url = `${base_url}/uploads/${type}`;
+
+      const formData = new FormData();
+      formData.append('image', archivo);
+
+
+      const resp = await fetch(url, {
+        method: 'PUT',
+        headers:{
+          'x-token': localStorage.getItem('token') || ''
+        },
+        body: formData
+      });
+
+      return await resp.json();
+
+  }
+
+  /** ================================================================
+   *   UPDATE FILES
+  ==================================================================== */
+  async updateFiles(
+    archivo: File,
+    type: 'img' | 'archivos' ,
+    desc: 'Cedula Ciudadania' | 'Hoja de vida' | 'Registro Civil' | 'Registro de Matrimonio' | 'EPS' | 'Pensiones' | 'Cesantias' | 'Banco' | 'Caja de Compensacion' | 'RUT' | 'Antecedentes'
+  ){
+      
+      const url = `${base_url}/uploads/files/${type}/${desc}`;
 
       const formData = new FormData();
       formData.append('image', archivo);
@@ -61,14 +87,9 @@ export class FileUploadService {
   /** ================================================================
    *   DELETE IMAGES
   ==================================================================== */
-  deleteImg(
-    type: 'worker' | 'archivos' ,
-    id: string,
-    desc: 'archivo' | 'img',
-    img: string
-  ){
+  deleteFile(attachment: string){
 
-    return this.http.delete(`${base_url}/uploads/delete/${type}/${id}/${desc}/${img}`, this.headers);
+    return this.http.delete<{worker: Worker, ok: boolean}>(`${base_url}/uploads/delete/${attachment}`, this.headers);
 
   }
 

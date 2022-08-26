@@ -1,3 +1,10 @@
+interface _skills{
+    name: string,
+    years: number,
+    date?: Date,
+    _id?: string
+}
+
 export class Worker {
 
     constructor(
@@ -15,7 +22,8 @@ export class Worker {
         public img: string,
         public fecha: Date,
         public wid: string,
-        public attachments: any[]
+        public attachments: any[],
+        public skills: _skills[]
         
     ){}
 

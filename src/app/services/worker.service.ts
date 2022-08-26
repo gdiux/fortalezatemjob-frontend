@@ -72,10 +72,10 @@ export class WorkerService {
     }).pipe(
       tap( (resp: any) => {
         
-        const {name, cedula, phone, email, address, city, department, zip, status, google, type, img, fecha, wid, attachments} = resp.worker;
+        const {name, cedula, phone, email, address, city, department, zip, status, google, type, img, fecha, wid, attachments, skills} = resp.worker;
 
-        this.worker = new Worker( name, cedula, phone, email, address, city, department, zip, status, google, type, img, fecha, wid, attachments );        
-              
+        this.worker = new Worker( name, cedula, phone, email, address, city, department, zip, status, google, type, img, fecha, wid, attachments , skills );        
+        
         localStorage.setItem('token', resp.token);
 
       }),
@@ -97,6 +97,13 @@ export class WorkerService {
   ==================================================================== */
   updateWorker(formData: any, wid: string){
     return this.http.put<{ ok: boolean, worker: Worker }>(`${base_url}/worker/${wid}`, formData, this.headers);
+  }
+
+  /** ================================================================
+   *   DELETE EXP WORKER
+  ==================================================================== */
+  deleteExpWorker( id: string ){
+    return this.http.delete<{ ok: boolean, worker: Worker }>(`${base_url}/worker/exp/${id}`,  this.headers);
   }
 
 

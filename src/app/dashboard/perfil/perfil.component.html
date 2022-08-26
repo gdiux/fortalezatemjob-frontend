@@ -1,13 +1,230 @@
 <section class="mt-5 container pb-5">
 
     <!-- PERFIL -->
-    <div class="py-5 px-3 shadow-sm">
+    <div class="py-5 px-3">
+
+        <div class="row">
+
+            <!-- FOTO DE PERFIL -->
+            <div class="col-lg-4 col-xlg-3 col-md-5">
+
+                <div class=" py-4 px-3 animated shadow fadeIn " style="border-radius:1rem;">
+                    <p class="badge rounded-pill" [ngClass]="{'text-bg-warning': worker.type === 'Aspirante', 'text-bg-success': worker.type === 'Trabajador'}"> {{ worker.type }} </p>
+                    <div class="card rounded mx-auto" style="width:8rem;">
+                        <button type="button" class="border-0 p-0 btnImg" data-bs-toggle="modal" data-bs-target="#imagenPerfil">
+                            
+                            <div class="mx-auto " >
+                                <p class="mb-0 text-white text-center" style="position: absolute; top:40%; left: 5%;">
+                                    cambiar imagen
+                                </p>
+                            </div>
+
+                            <img class="card-img rounded" [src]="worker.img | imagen: 'worker'" alt="">
+                        </button>
+                    </div>
+
+
+
+                    <h3 class="mb-0 text-break text-sm-start text-center text-primario display-4">{{ worker.name }}</h3>
+
+                    <h6 class="mb-0 text-break text-sm-start text-center text-mute">Telefono: <a class="text-decoration-none" href="tel:{{worker.phone}}">{{ worker.phone || 'Pendiente' }}</a></h6>
+                    <h6 class="mb-0 text-break text-sm-start text-center text-mute">Email: <a class="text-decoration-none" href="mailto:{{worker.email}}"> {{ worker.email }} </a></h6>
+                    <h6 class="text-mute"> Dirección: <span class="fw-normal">{{ worker.address || 'Pendiente' }}</span> </h6>
+
+                    <div class="d-flex justify-content-end">
+                        <button (click)="edit()" type="button" class="btn-link text-primario bg-white border-0 btn-sm ms-auto py-0 " data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="bi bi-pencil-square"></i> </button>
+                    </div>
+
+                </div>
+
+                <div class="pb-5 px-3 shadow py-4 my-4" style="border-radius: 1rem;">
+                    <div class="d-flex justify-content-between mb-4">
+                        <h6 class="text-muted mb-0"> Experiencia o Habilidades </h6>
+
+                        <button type="button" class="btn-link text-primario bg-white border-0 btn-sm ms-auto py-0 h4" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-plus-square"></i>
+                        </button>
+
+                        <div class="dropdown-menu">
+
+                            <div class="container">
+
+                                <form [formGroup]="formExp" (submit)="agregarExp()">
+
+                                    <h5 class="text-muted">Agrega una experiencia o habilidad</h5>
+                                    <hr>
+                                    <div class="mb-1">
+                                        <label for="experiencia" class="form-label mb-0">Experiencia ó Habilidad</label>
+                                        <input formControlName="name" type="text" class="form-control" id="experiencia" placeholder="Experiencia">
+                                        <small *ngIf="validateFormExp('name')" class="text-danger"> Campo obligatorio </small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="años" class="form-label mb-0">Años</label>
+                                        <input formControlName="years" type="number" min="0" class="form-control" id="años" placeholder="Años">
+                                        <small *ngIf="validateFormExp('years')" class="text-danger"> Campo obligatorio y desde 1 año en adelante </small>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-sm w-100 btn-block">Agregar</button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- SKILLS -->
+                    <div>
+                        <ul class="list-group list-group-flush">
+                            <li *ngFor="let exp of worker.skills" class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <button (click)="eliminarExp(exp._id!)" type="button" class="btn-link text-danger bg-white border-0 btn-sm p-0 m-0 h6">
+                                        <i class="bi bi-x"></i>
+                                    </button> {{ exp.name }}
+                                </div>
+                                <span class="badge bg-primary rounded-pill">
+                                    {{ exp.years }}
+
+                                    <span *ngIf="exp.years > 1">años</span>
+                                <span *ngIf="exp.years === 1">año</span>
+
+                                </span>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- SKILLS -->
+
+                </div>
+
+            </div>
+            <!-- FOTO DE PERFIL -->
+
+
+            <!-- INFORMACION -->
+            <div class="col-lg-8 col-xlg-9 col-md-7">
+
+                <!-- DESCRIPCION -->
+                <!-- <div class="pb-5 px-3 shadow py-4 mb-4" style="border-radius: 1rem;"></div> -->
+                <!-- DESCRIPCION -->
+
+                <!-- CHECK LIST -->
+                <div class="pb-5 px-3 shadow py-4" style="border-radius: 1rem;">
+
+                    <!-- <h4 class="mb-4 text-muted">Requisitos</h4> -->
+
+                    <div class="accordion" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Requisitos obligatorios
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <div class="row">
+
+                                        <div class="col-md-6 px-2">
+
+                                            <ul class="list-group list-group-flush ">
+                                                <li class="list-group-item py-0"> <small>1.	Fotocopia de la cedula 150%</small> </li>
+                                                <li class="list-group-item py-0"> <small>2.	Hoja de vida con todos los soportes ( académicos y laborales) </small> </li>
+                                                <li class="list-group-item py-0"> <small>3.	Registro civil de los hijos, tarjeta de identidad o  cedula de ciudadanía  </small> </li>
+                                                <li class="list-group-item py-0"> <small>4.	Si la persona es casada y va afiliar a su esposa dentro de su núcleo familiar debe aportar el registro de matrimonio  </small> </li>
+                                                <li class="list-group-item py-0"> <small>5.	Certificado de la EPS </small> </li>
+                                                <li class="list-group-item py-0"> <small>6.	Certificado del fondo de PENSIONES </small> </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-md-6 px-2">
+
+                                            <ul class="list-group list-group-flush ">
+                                                <li class="list-group-item py-0"> <small>7.	Certificado de CESANTÍAS </small> </li>
+                                                <li class="list-group-item py-0"> <small>8.	Certificado de entidad bancaria no mayor a 30 días  </small> </li>
+                                                <li class="list-group-item py-0"> <small>9.	Confirmación de la caja de compensación familiar a la que desea ser afiliado  </small> </li>
+                                                <li class="list-group-item py-0"> <small>10. Copia del RUT ( si es responsable) </small> </li>
+                                                <li class="list-group-item py-0"> <small>11. Certificado de antecedentes de CONTRALORIA, PROCURADURIA Y PONAL  </small> </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mt-4">
+                        <div>
+                            <h4 class="mb-4 text-muted">Archivos Guardados</h4>
+                        </div>
+
+                        <div class="ms-auto">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#subirArchivos">Subir</button>
+                        </div>
+
+                    </div>
+
+
+                    <!-- TABLA DE ARCHIVOS -->
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Aprobado</th>
+                                    <th scope="col">Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngIf="worker.attachments.length === 0">
+                                    <td colspan="5">
+                                        <h4 class="mb-0 text-muted text-center"> No tienes ningun archivo guardado... </h4>
+                                    </td>
+                                </tr>
+
+                                <tr *ngFor="let file of worker.attachments; let i = index">
+                                    <th scope="row"> {{ i +1 }} </th>
+                                    <td> {{ file.desc }} </td>
+                                    <td> {{ file.fecha | date:'short' }} </td>
+                                    <td>
+                                        <span *ngIf="!file.status" class="badge text-bg-danger">Rechazada</span>
+                                        <span *ngIf="!file.approved && file.status" class="badge text-bg-warning">Pendiente</span>
+                                        <span *ngIf="file.approved && file.status" class="badge text-bg-warning">Aprobada</span>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-primary border-0" [href]="url+'/uploads/archivos/'+file.attachment" target="_blank"> <i class="bi bi-arrow-90deg-right"></i> </a>
+                                        <button (click)="deleteFile(file.attachment)" type="button" class="btn btn-sm btn-outline-danger border-0"> <i class="bi bi-trash"></i> </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- TABLA DE ARCHIVOS -->
+
+                </div>
+                <!-- CHECK LIST -->
+
+            </div>
+            <!-- INFORMACION -->
+        </div>
+
+    </div>
+
+
+    <!-- <div class="py-5 px-3 shadow-sm">
 
         <div class="d-flex align-items-start justify-content-center flex-wrap flex-md-nowrap gap-4">
 
             <div class="animated fadeIn">
                 <div class="card rounded" style="width:8rem;">
-                    <img class="card-img rounded" src="../../../assets/img/user/user.jpg" alt="">
+                    <button type="button" class="border-0 p-0" data-bs-toggle="modal" data-bs-target="#imagenPerfil">
+                        <img class="card-img rounded" [src]="worker.img | imagen: 'worker'" alt="">
+                    </button>
                 </div>
                 <div class="ms-auto text-white fw-bold py-2 text-center mt-2" [ngClass]="{'bg-warning': worker.type === 'Aspirante', 'bg-success': worker.type === 'Trabajador'}"> {{ worker.type }} </div>
             </div>
@@ -22,33 +239,10 @@
 
         </div>
 
-    </div>
+    </div> -->
     <!-- PERFIL -->
 
-    <!-- CURRICULUM -->
-    <div class="py-5 px-3 shadow-sm mt-5">
 
-        <h4 class="text-muted text-center"> Adjunte aqui archivos ejemplo: Hoja de vida - Cursos - Talleres - Capacitaciones </h4>
-
-        <div class="d-flex flex-row flex-wrap gap-2 justify-content-center">
-
-            <div>
-                <input #file type="file" class="form-control" name="" id="" placeholder="" (change)="selecArch($event.target)">
-            </div>
-            <button (click)="subirArch()" type="button" name="" id="" class="btn btn-primary btn-sm">Guardar</button>
-
-        </div>
-
-        <div class="d-flex justify-content-center flex-wrap gap-4 mt-4">
-
-            <a *ngFor="let archivo of worker.attachments; let i = index" class="shadow-sm p-4 text-decoration-none bg-primario text-white rounded" [href]="url+'/uploads/archivos/'+archivo.attachment" download target="_blank">
-                {{ i + 1 }}
-            </a>
-
-        </div>
-
-    </div>
-    <!-- CURRICULUM -->
 
 
 </section>
@@ -107,3 +301,103 @@
     </div>
 </div>
 <!-- MODAL EDITAR PERFIL -->
+
+<!-- MODAL SUBIR ARCHIVOS -->
+<div class="modal fade" id="subirArchivos" tabindex="-1" aria-labelledby="subirArchivosLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div *ngIf="loading" class="spinner-grow text-primary me-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h5 class="modal-title" id="subirArchivosLabel">Subir Archivos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <label for="descc"> Tipo de documento </label>
+                <select id="descc" class="form-select" aria-label="Default select example" #desc>
+                    <option value="Cedula Ciudadania">Cedula Ciudadania</option>
+                    <option value="Hoja de vida">Hoja de vida</option>
+                    <option value="Registro Civil">Registro Civil</option>
+                    <option value="Registro de Matrimonio">Registro de Matrimonio</option>
+                    <option value="EPS">EPS</option>
+                    <option value="Pensiones">Certificado del Fondo Pensiones</option>
+                    <option value="Cesantias">Certificado de Cesantias</option>
+                    <option value="Banco">Certificado Bancario</option>
+                    <option value="Caja de Compensacion">Caja de Compensacion</option>
+                    <option value="RUT">RUT</option>
+                    <option value="Antecedentes">Certificado de antecedentes de CONTRALORIA, PROCURADURIA Y PONAL</option>
+                </select>
+
+                <div class="d-flex flex-row flex-wrap gap-2 justify-content-center mt-2">
+
+                    <div>
+                        <input #file type="file" class="form-control" name="" id="" placeholder="" (change)="selecArch($event.target)">
+                    </div>
+
+                    <button [disabled]="loading" (click)="subirArch(desc.value)" type="button" name="" id="" class="btn btn-primary btn-sm">
+                        <span *ngIf="!loading">                            
+                            Guardar
+                        </span>
+                        <span *ngIf="loading">                            
+                            Guardando...
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex">
+                    <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL SUBIR ARCHIVOS -->
+
+<!-- MODAL CAMBIAR IMAGEN DE PERFIL -->
+<div class="modal fade" id="imagenPerfil" tabindex="-1" aria-labelledby="imagenPerfilLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imagenPerfilLabel">Foto de perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="animated fadeIn">
+                    <div class="card rounded mx-auto" style="width:8rem;">
+                        <label for="formFileSm" class="form-label mb-0">
+                            <img *ngIf="!imgTempP" class="card-img rounded" [src]="worker.img | imagen: 'worker'" alt="">
+                            <img *ngIf="imgTempP" [src]="imgTempP" class="card-img rounded" alt="">
+                        </label>
+                    </div>
+
+                    <div>
+                        <!-- Description-->
+                        <div class="small font-italic text-muted mb-4 text-center">JPG - PNG - WEBP - no mayor a 8 mb</div>
+                        <div class="mb-3" style="display: none;">
+                            <input #fileImg class="form-control form-control-sm" id="formFileSm" type="file" (change)="cambiarImage($event)">
+                        </div>
+                        <!-- BTN upload Image -->
+                        <div class="d-flex justify-content-center">
+
+                            <button *ngIf="imgTempP" class="btn btnW btn-primary waves-effect waves-light mx-auto" [disabled]=" !subirImagen " (click)="subirImg() " type="button ">Actualizar Imagen</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <div class="d-flex ">
+                    <button type="button " class="btn btn-secondary ms-auto " data-bs-dismiss="modal ">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

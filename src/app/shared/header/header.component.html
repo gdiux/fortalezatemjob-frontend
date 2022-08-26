@@ -40,9 +40,9 @@
                     <a *ngIf="!login" routerLink="/portal/empresas" routerLinkActive="active" class="btn btn-sm btn-outline-success rounded-pill">Empresas</a>
 
                     <ul *ngIf="login" class="navbar-nav ">
-                        <li class="nav-item dropdown">
+                        <li *ngIf="worker" class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              {{ worker?.name }}
+                              {{ worker.name }}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" routerLink="/dashboard/perfil">Perfil</a></li>

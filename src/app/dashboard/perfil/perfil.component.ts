@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -107,7 +107,7 @@ export class PerfilComponent implements OnInit {
   public imgTemp: any = null;
   public imgTempAft: any = null;
   
-  public desc: 'archivo' | 'img' = 'img';
+  public typeFile: 'archivos' | 'img' = 'img';
   selecArch(file: any): any{
 
     this.subirArchivo = file.files[0];
@@ -118,13 +118,18 @@ export class PerfilComponent implements OnInit {
 
     let verExt = this.subirArchivo.name.split('.');
     let ext = verExt[verExt.length - 1];
-    this.desc = 'archivo';
+    
+    if (ext === 'jpg' || ext === 'png' || ext === 'jepg' || ext === 'webp' ) {      
+      this.typeFile = 'img';
+    }else if (ext === 'pdf' || ext === 'docx' || ext === 'xlsx' ) {
+      this.typeFile = 'archivos';      
+    }
     
     // VALID EXT
-    const archExt = ['pdf', 'docx', 'xlsx'];
+    const archExt = ['pdf', 'docx', 'xlsx', 'jpg', 'png', 'jepg', 'webp'];
 
     if (!archExt.includes(ext)) {
-      Swal.fire('Atención', 'Solo se permiten archivos PDF - Word - Excel', 'warning');
+      Swal.fire('Atención', 'Solo se permiten archivos PDF - Word - Excel - JPG - PNG - WEBP', 'warning');
       return this.file!.nativeElement.value = '';
     }
        
@@ -136,13 +141,16 @@ export class PerfilComponent implements OnInit {
   ==================================================================== */
   @ViewChild('file') file!: any;
   public subirArchivo!: File;
-
   public imgProducto: string = 'no-image';
+  public loading: boolean = false;
 
-  subirArch( ): any{
+  subirArch(desc: any ): any{
+
+    this.loading = true;
     
-    this.fileUploadService.updateImage( this.subirArchivo, 'archivos', this.worker.wid!, this.desc)
+    this.fileUploadService.updateFiles( this.subirArchivo, this.typeFile, desc)
     .then( data => {  
+    
 
       if (data.ok === false) {
         Swal.fire('Error', data.msg, 'error');
@@ -150,19 +158,179 @@ export class PerfilComponent implements OnInit {
         this.imgProducto = 'no-image';    
         this.imgTemp = null;
         this.file!.nativeElement.value = '';
-
+        this.loading = false;
+        
         return;
       }
+      
+      this.worker.attachments = data.worker.attachments;
+      this.loading = false;
+      
+      Swal.fire('Estupendo', 'Se ha guardado el archivo exitosamente!', 'success');
 
-      this.worker.attachments.push({
-        attachment: data.nombreArchivo
-      });
       
     });
     
     this.file!.nativeElement.value = '';
     
   }
+
+  /** ================================================================
+   *  ELIMINAR ARCHIVOS
+  ==================================================================== */
+  deleteFile(attachment: string){
+
+    Swal.fire({
+      title: 'Atención?',
+      text: "Estas seguro de eliminar este archivo!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.fileUploadService.deleteFile(attachment)
+        .subscribe( ({worker}) => {
+          
+          this.worker.attachments = worker.attachments;
+          Swal.fire('Estupendo', 'El archivo se elimino exitosamente', 'success');
+
+        });
+
+      }
+    })
+
+  };
+
+  /** ================================================================
+   *   ACTUALIZAR IMAGEN
+  ==================================================================== */
+  public imgTempP: any = null;
+  public subirImagen!: File;
+  cambiarImage(file: any): any{
+    
+    
+    this.subirImagen = file.target.files[0];
+    
+    if (!this.subirImagen) { return this.imgTempP = null }
+    
+    
+    const reader = new FileReader();
+    const url64 = reader.readAsDataURL(file.target.files[0]);
+    
+    
+    reader.onloadend = () => {
+      this.imgTempP = reader.result;      
+    }
+
+    
+
+  }
+
+  /** ================================================================
+   *  SUBIR IMAGEN fileImg
+  ==================================================================== */
+  @ViewChild('fileImg') fileImg!: ElementRef;
+  public imgPerfil: string = 'no-image';
+  subirImg(){
+    
+    this.fileUploadService.updateImage( this.subirImagen, 'worker')
+    .then( 
+      (resp: {worker: Worker, ok: boolean}) => {
+        
+        this.worker.img = resp.worker.img;
+        this.workerService.worker.img = resp.worker.img;
+        
+      }
+    );
+    
+    this.fileImg.nativeElement.value = '';
+    this.imgTempP = null;
+    
+  }
+
+  /** ================================================================
+   *  AGREGAR EXPERIENCIAS O HABILIDADES
+  ==================================================================== */
+  public formExpeSubmitted: boolean = false;
+  public formExp = this.fb.group({
+    name: ['',  [Validators.required]],
+    years: [ 1, [Validators.required, Validators.min(1)] ]
+  });
+
+  agregarExp(){
+
+    this.formExpeSubmitted = true;
+
+    if (this.formExp.invalid) {
+      return;
+    }
+    
+
+    this.worker.skills.push(this.formExp.value);    
+
+    this.workerService.updateWorker( {skills: this.worker.skills}, this.worker.wid )
+        .subscribe( ({worker}) => {
+
+          Swal.fire('Estupendo', 'Se ha agregado la habilidad exitosamente!', 'success');
+          this.worker.skills = worker.skills;          
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+        });
+
+  }
+
+  /** ======================================================================
+   * VALIDATE FORM EXPERIENCIA
+  ====================================================================== */
+  validateFormExp( campo:string ): boolean{
+
+    if ( this.formExp.get(campo)?.invalid && this.formExpeSubmitted ) {      
+      return true;
+    }else{
+      return false;
+    }
+
+  }
+
+  /** ======================================================================
+   * ELIMINAR EXPERIENCIA
+  ====================================================================== */
+  eliminarExp( id: string ){
+
+    Swal.fire({
+      title: 'Atención?',
+      text: "Estas seguro de eliminar esta habilidad o experiencia!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.workerService.deleteExpWorker(id)
+            .subscribe( ({worker}) => {
+              
+              this.worker.skills = worker.skills;
+              Swal.fire('Estupendo', 'Se ha eliminado la habilidad exitosamente!', 'success');
+              
+            }, (err) => {
+              console.log(err);
+              Swal.fire('Error', err.error.msg, 'error');
+              
+            })
+
+      }
+    })
+
+  };
 
 
   // FIN DE LA CLASE
