@@ -199,7 +199,7 @@
                                     <td>
                                         <span *ngIf="!file.status" class="badge text-bg-danger">Rechazada</span>
                                         <span *ngIf="!file.approved && file.status" class="badge text-bg-warning">Pendiente</span>
-                                        <span *ngIf="file.approved && file.status" class="badge text-bg-warning">Aprobada</span>
+                                        <span *ngIf="file.approved && file.status" class="badge text-bg-success">Aprobada</span>
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-outline-primary border-0" [href]="url+'/uploads/archivos/'+file.attachment" target="_blank"> <i class="bi bi-arrow-90deg-right"></i> </a>
