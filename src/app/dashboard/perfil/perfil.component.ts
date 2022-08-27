@@ -148,7 +148,7 @@ export class PerfilComponent implements OnInit {
 
     this.loading = true;
     
-    this.fileUploadService.updateFiles( this.subirArchivo, this.typeFile, desc)
+    this.fileUploadService.updateFiles( this.subirArchivo, this.typeFile, desc, this.worker.wid)
     .then( data => {  
     
 
@@ -192,7 +192,7 @@ export class PerfilComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.fileUploadService.deleteFile(attachment)
+        this.fileUploadService.deleteFile(attachment, this.worker.wid)
         .subscribe( ({worker}) => {
           
           this.worker.attachments = worker.attachments;

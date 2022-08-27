@@ -221,33 +221,6 @@
     </div>
 
 
-    <!-- <div class="py-5 px-3 shadow-sm">
-
-        <div class="d-flex align-items-start justify-content-center flex-wrap flex-md-nowrap gap-4">
-
-            <div class="animated fadeIn">
-                <div class="card rounded" style="width:8rem;">
-                    <button type="button" class="border-0 p-0" data-bs-toggle="modal" data-bs-target="#imagenPerfil">
-                        <img class="card-img rounded" [src]="worker.img | imagen: 'worker'" alt="">
-                    </button>
-                </div>
-                <div class="ms-auto text-white fw-bold py-2 text-center mt-2" [ngClass]="{'bg-warning': worker.type === 'Aspirante', 'bg-success': worker.type === 'Trabajador'}"> {{ worker.type }} </div>
-            </div>
-
-            <div class="animated fadeInLeft">
-                <h3 class="mb-0 text-break text-sm-start text-center text-primario display-4">{{ worker.name }}</h3>
-                <h6 class="mb-0 text-break text-sm-start text-center text-mute">Telefono: <a class="text-decoration-none" href="tel:{{worker.phone}}">{{ worker.phone || 'Pendiente' }}</a></h6>
-                <h6 class="mb-0 text-break text-sm-start text-center text-mute">Email: <a class="text-decoration-none" href="mailto:{{worker.email}}"> {{ worker.email }} </a></h6>
-                <h6 class="text-mute"> Dirección: <span class="fw-normal">{{ worker.address || 'Pendiente' }}</span> </h6>
-                <button (click)="edit()" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="bi bi-pencil-square"></i> </button>
-            </div>
-
-        </div>
-
-    </div> -->
-    <!-- PERFIL -->
-
-
 
 
 </section>
@@ -333,6 +306,7 @@
                     <option value="Caja de Compensacion">Caja de Compensacion</option>
                     <option value="RUT">RUT</option>
                     <option value="Antecedentes">Certificado de antecedentes de CONTRALORIA, PROCURADURIA Y PONAL</option>
+                    <option value="Examen Medico">Examen Medico</option>
                 </select>
 
                 <div class="d-flex flex-row flex-wrap gap-2 justify-content-center mt-2">

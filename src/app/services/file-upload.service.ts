@@ -63,7 +63,8 @@ export class FileUploadService {
   async updateFiles(
     archivo: File,
     type: 'img' | 'archivos' ,
-    desc: 'Cedula Ciudadania' | 'Hoja de vida' | 'Registro Civil' | 'Registro de Matrimonio' | 'EPS' | 'Pensiones' | 'Cesantias' | 'Banco' | 'Caja de Compensacion' | 'RUT' | 'Antecedentes'
+    desc: 'Examen Medico' |'Cedula Ciudadania' | 'Hoja de vida' | 'Registro Civil' | 'Registro de Matrimonio' | 'EPS' | 'Pensiones' | 'Cesantias' | 'Banco' | 'Caja de Compensacion' | 'RUT' | 'Antecedentes',
+    wid: string
   ){
       
       const url = `${base_url}/uploads/files/${type}/${desc}`;
@@ -87,9 +88,9 @@ export class FileUploadService {
   /** ================================================================
    *   DELETE IMAGES
   ==================================================================== */
-  deleteFile(attachment: string){
+  deleteFile(attachment: string, wid: string){
 
-    return this.http.delete<{worker: Worker, ok: boolean}>(`${base_url}/uploads/delete/${attachment}`, this.headers);
+    return this.http.delete<{worker: Worker, ok: boolean}>(`${base_url}/uploads/delete/${attachment}/${wid}`, this.headers);
 
   }
 
