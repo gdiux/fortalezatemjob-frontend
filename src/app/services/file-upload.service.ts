@@ -67,7 +67,7 @@ export class FileUploadService {
     wid: string
   ){
       
-      const url = `${base_url}/uploads/files/${type}/${desc}`;
+      const url = `${base_url}/uploads/files/${type}/${desc}/${wid}`;
 
       const formData = new FormData();
       formData.append('image', archivo);
