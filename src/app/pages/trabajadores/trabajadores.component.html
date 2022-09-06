@@ -31,7 +31,12 @@
 
                     </form>
 
-                    <a routerLink="/registrarse" class=""> Crear cuenta nueva</a>
+                    <div class="d-flex justify-content-between">
+                        <a routerLink="/registrarse" class=""> Crear cuenta nueva</a>
+
+                        <a type="button" class="pointer" data-bs-toggle="modal" data-bs-target="#recuperarcontraseña"> Olvide mi contraseña?</a>
+                    </div>
+
                 </div>
 
             </div>
@@ -40,3 +45,35 @@
 
     </div>
 </section>
+
+
+<!-- RECUPERAR CONTRASEÑA -->
+<div class="modal fade" id="recuperarcontraseña" tabindex="-1" aria-labelledby="recuperarcontraseñaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recuperar contraseñaLabel">Recuperar Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form autocomplete="off" [formGroup]="formPassRee" (ngSubmit)="rePass()">
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email</label>
+                        <input formControlName="email" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        <small *ngIf="validatePass('email')" class="text-danger">El email es obligatorio</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mb-3">Recuperar</button>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RECUPERAR CONTRASEÑA -->

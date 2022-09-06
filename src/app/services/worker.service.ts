@@ -106,6 +106,13 @@ export class WorkerService {
     return this.http.delete<{ ok: boolean, worker: Worker }>(`${base_url}/worker/exp/${id}`,  this.headers);
   }
 
+  /** ================================================================
+   *   RECUPERAR PASSWORD
+  ==================================================================== */
+  recuperarPassword( formData: any ){
+    return this.http.post(`${base_url}/login/recuperar/password`, formData);
+  }
+
 
 
 

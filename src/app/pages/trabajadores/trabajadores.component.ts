@@ -95,6 +95,57 @@ export class TrabajadoresComponent implements OnInit {
 
   }
 
+  /** =============================================================
+   * RECUPERAR CONTRASEÑA
+  =============================================================== */
+  public formPassSubmitted: boolean = false;
+  public formPassRee = this.fb.group(
+    {
+      email: ['', [Validators.required, Validators.email]]
+    }
+  )
+
+  rePass(){
+
+    this.formPassSubmitted = true;
+
+    if (this.formPassRee.invalid) {
+      return;
+    }
+
+    this.workerService.recuperarPassword(this.formPassRee.value)
+        .subscribe( resp => {
+
+          console.log(resp);
+          
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+          
+        });
+
+
+  }
+
+  /** =============================================================
+   * VALIDAR CAMPOS PASS
+  =============================================================== */
+  validatePass( campo: string): boolean{
+    
+    if ( this.formPassRee.get(campo)?.invalid && this.formPassSubmitted ) {
+      return true;
+    }else{
+      return false;
+    }
+
+  }
+
+  /** =============================================================
+   * RECUPERAR CONTRASEÑA
+  =============================================================== */
+
+
 
   
 
