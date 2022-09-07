@@ -31,8 +31,9 @@
                     <h6 class="mb-0 text-break text-sm-start text-center text-mute">Email: <a class="text-decoration-none" href="mailto:{{worker.email}}"> {{ worker.email }} </a></h6>
                     <h6 class="text-mute"> Dirección: <span class="fw-normal">{{ worker.address || 'Pendiente' }}</span> </h6>
 
-                    <div class="d-flex justify-content-end">
-                        <button (click)="edit()" type="button" class="btn-link text-primario bg-white border-0 btn-sm ms-auto py-0 " data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="bi bi-pencil-square"></i> </button>
+                    <div class="d-flex">
+                        <button (click)="edit()" type="button" class="btn-link text-primario bg-white border-0 btn-sm py-0 " data-bs-toggle="modal" data-bs-target="#cambiarPassword"> <small>cambiar contraseña</small> </button>
+                        <button (click)="edit()" type="button" class=" btn-link text-primario bg-white border-0 btn-sm ms-auto py-0 " data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="bi bi-pencil-square"></i> </button>
                     </div>
 
                 </div>
@@ -279,6 +280,40 @@
     </div>
 </div>
 <!-- MODAL EDITAR PERFIL -->
+
+<!-- MODAL CAMBIAR CONTRASEÑA -->
+<div class="modal fade" id="cambiarPassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cambiarPasswordLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cambiarPasswordLabel">Cambiar Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="formPassReset" (ngSubmit)="resetPassword()">
+
+                        <div class="form-floating ">
+                            <input formControlName="password" [ngClass]="{'is-invalid': validateFormPass('password')}" type="password" class="form-control" id="floatingInputPassword2" placeholder="Contraseña">
+                            <label for="floatingInputPassword2">Contraseña</label>
+                        </div>
+                        <div class="form-floating mt-4">
+                            <input formControlName="repassword" [ngClass]="{'is-invalid': validateFormPass('repassword')}" type="password" class="form-control" id="floatingInputRepPassword2" placeholder="Repetir Contraseña">
+                            <label for="floatingInputRepPassword2">Repetir contraseña</label>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary mt-4" type="submit">Cambiar</button>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL CAMBIAR CONTRASEÑA -->
 
 <!-- MODAL SUBIR ARCHIVOS -->
 <div class="modal fade" id="subirArchivos" tabindex="-1" aria-labelledby="subirArchivosLabel" aria-hidden="true">

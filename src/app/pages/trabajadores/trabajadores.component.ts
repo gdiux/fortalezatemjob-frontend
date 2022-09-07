@@ -99,6 +99,7 @@ export class TrabajadoresComponent implements OnInit {
    * RECUPERAR CONTRASEÑA
   =============================================================== */
   public formPassSubmitted: boolean = false;
+  public btnFormPass: boolean = false;
   public formPassRee = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]]
@@ -108,22 +109,27 @@ export class TrabajadoresComponent implements OnInit {
   rePass(){
 
     this.formPassSubmitted = true;
-
+    this.btnFormPass = true;
+    
     if (this.formPassRee.invalid) {
+      this.btnFormPass = false;
       return;
     }
-
+    
     this.workerService.recuperarPassword(this.formPassRee.value)
-        .subscribe( resp => {
-
-          console.log(resp);
-          
-
-        }, (err) => {
-          console.log(err);
+    .subscribe( resp => {
+      
+      Swal.fire('Estupendo', 'Se ha enviado un correo con tu nueva contraseña, porfavor verificar los correos Spam o no deseados en caso de no llegar a tu bandeja de entrada', 'success');
+      this.formPassRee.reset();
+      this.formPassSubmitted = false;
+      this.btnFormPass = false;
+      
+    }, (err) => {
+      this.btnFormPass = false;
+      console.log(err);
           Swal.fire('Error', err.error.msg, 'error');
-          
-        });
+    
+      });
 
 
   }

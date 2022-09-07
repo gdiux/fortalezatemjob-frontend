@@ -297,6 +297,59 @@ export class PerfilComponent implements OnInit {
     }
 
   }
+  
+  /** ======================================================================
+   * CAMBIAR CONTRASEÑA
+  ====================================================================== */
+  public formPassResetSubmitted: boolean = false;
+  public formPassReset = this.fb.group({
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    repassword: ['', [Validators.required, Validators.minLength(6)]],
+  });
+
+  resetPassword(){
+
+    this.formPassResetSubmitted = true;
+
+    if (this.formPassReset.invalid) {
+      return;
+    }
+
+    if( this.formPassReset.value.password !==  this.formPassReset.value.repassword){
+      Swal.fire('Error', 'Las contraseñas no son iguales', 'error');
+      return;
+
+    }
+
+    this.workerService.updateWorker(this.formPassReset.value, this.worker.wid)
+        .subscribe( ({worker}) => {
+          
+          this.formPassResetSubmitted = false;
+          this.formPassReset.reset();
+          Swal.fire('Estupendo', 'Tu contraseña se ha actualizado exitosamente!', 'success');
+          
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        }); 
+
+
+  }
+
+  /** ======================================================================
+   * VALIDATE FORM RECUPERAR CONTRASEÑA
+  ====================================================================== */
+  validateFormPass( campo:string ): boolean{
+
+    if ( this.formPassReset.get(campo)?.invalid && this.formPassResetSubmitted ) {      
+      return true;
+    }else{
+      return false;
+    }
+
+  }
+
 
   /** ======================================================================
    * ELIMINAR EXPERIENCIA
