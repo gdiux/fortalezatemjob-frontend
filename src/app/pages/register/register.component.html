@@ -9,27 +9,35 @@
                         <img class="mb-4" src="../../../assets/img/logo/logo.webp" alt="" height="57">
                         <h1 class="h3 mb-3 fw-normal">Registrarme</h1>
 
-                        <div class="form-floating ">
-                            <input formControlName="name" [ngClass]="{'is-invalid': validateForm('name')}" type="text" class="form-control" id="floatingInputName" placeholder="Nombres">
-                            <label for="floatingInputName">Nombres</label>
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="name" [ngClass]="{'is-invalid': validateForm('name')}" type="text" class="form-control" id="floatingInputName" placeholder="Nombres y Apellidos">
+                            <label for="floatingInputName">Nombres y Apellidos</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="cedula" [ngClass]="{'is-invalid': validateForm('cedula')}" type="text" class="form-control" id="floatingInputCedula" placeholder="Cedula">
+                            <label for="floatingInputCedula">Cedula</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="phone" [ngClass]="{'is-invalid': validateForm('phone')}" type="text" class="form-control" id="floatingInputPhone" placeholder="Telefono">
+                            <label for="floatingInputPhone">Telefono</label>
                         </div>
 
-                        <div class="form-floating">
+                        <div class="form-floating mb-3">
                             <input formControlName="email" [ngClass]="{'is-invalid': validateForm('email')}" type="email" class="form-control text-lowercase" id="floatingInput" placeholder="name@example.com">
                             <label for="floatingInput">Email</label>
                         </div>
 
-                        <div class="form-floating">
+                        <div class="form-floating mb-3">
                             <input formControlName="password" [ngClass]="{'is-invalid': validateForm('password')}" type="password" class="form-control" id="floatingPassword" placeholder="Contraseña">
                             <label for="floatingPassword">Contraseña</label>
                         </div>
 
-                        <div class="form-floating">
+                        <div class="form-floating mb-3">
                             <input formControlName="repassword" [ngClass]="{'is-invalid': validateForm('repassword')}" type="password" class="form-control" id="floatingPassword2" placeholder="Repetir Contraseña">
                             <label for="floatingPassword2">Repetir Contraseña</label>
                         </div>
 
-                        <div class="form-check mt-2">
+                        <div class="form-check">
                             <input formControlName="terminos" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                             <label class="form-check-label" for="flexCheckDefault">
                                 <small>

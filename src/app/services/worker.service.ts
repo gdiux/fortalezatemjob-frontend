@@ -72,9 +72,9 @@ export class WorkerService {
     }).pipe(
       tap( (resp: any) => {
         
-        const {name, cedula, phone, email, address, city, department, zip, status, google, type, img, fecha, wid, attachments, skills} = resp.worker;
+        const {name, cedula, phone, email, address, city, department, zip, status, google, type, img, fecha, wid, attachments, skills, barrio} = resp.worker;
 
-        this.worker = new Worker( name, cedula, phone, email, address, city, department, zip, status, google, type, img, fecha, wid, attachments , skills );        
+        this.worker = new Worker( name, cedula, phone, email, address, city, department, zip, status, google, type, img, fecha, wid, attachments , skills, barrio );        
         
         localStorage.setItem('token', resp.token);
 

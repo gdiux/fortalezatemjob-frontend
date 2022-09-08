@@ -239,30 +239,38 @@
                 <div>
                     <form class="mb-4" autocomplete="off" [formGroup]="editarForm" (ngSubmit)="editar()">
 
-                        <div class="form-floating ">
+                        <div class="form-floating mb-3 ">
                             <input formControlName="name" [ngClass]="{'is-invalid': validateForm('name')}" type="text" class="form-control" id="floatingInputName" placeholder="Nombres">
                             <label for="floatingInputName">Nombres</label>
                         </div>
-                        <div class="form-floating ">
+                        <div class="form-floating mb-3 ">
                             <input formControlName="cedula" [ngClass]="{'is-invalid': validateForm('cedula')}" type="text" class="form-control" id="floatingInputCedula" placeholder="Cedula">
                             <label for="floatingInputCedula">Cedula</label>
                         </div>
-                        <div class="form-floating ">
+                        <div class="form-floating mb-3 ">
                             <input formControlName="phone" [ngClass]="{'is-invalid': validateForm('phone')}" type="text" class="form-control" id="floatingInpuPhone" placeholder="Telefono">
                             <label for="floatingInputPhone">Phone</label>
                         </div>
-                        <div class="form-floating ">
-                            <input formControlName="address" [ngClass]="{'is-invalid': validateForm('address')}" type="text" class="form-control" id="floatingInputAddress" Dirección="Dirección">
-                            <label for="floatingInputAddress">Dirección</label>
-                        </div>
-                        <div class="form-floating ">
+
+                        <div class="form-floating mb-3 ">
                             <input formControlName="city" type="text" class="form-control" id="floatingInputCity" placeholder="Ciudad">
                             <label for="floatingInputCity">City</label>
                         </div>
-                        <div class="form-floating ">
+                        <div class="form-floating mb-3 ">
                             <input formControlName="department" type="text" class="form-control" id="floatingInputDepartment" placeholder="Departamento">
                             <label for="floatingInputDepartment">Departamento</label>
                         </div>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="address" [ngClass]="{'is-invalid': validateForm('address')}" type="text" class="form-control" id="floatingInputAddress" Dirección="Dirección">
+                            <label for="floatingInputAddress">Dirección</label>
+                        </div>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="barrio" [ngClass]="{'is-invalid': validateForm('barrio')}" type="text" class="form-control" id="floatingInputBarrio" Dirección="Barrio">
+                            <label for="floatingInputBarrio">Barrio</label>
+                        </div>
+
 
                         <div *ngIf="validateForm('terminos')" class="text-danger">
                             <small>** Debes de aceptar todos los terminos y politicas de privacidad </small>

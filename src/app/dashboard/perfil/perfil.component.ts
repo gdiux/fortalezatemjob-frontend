@@ -44,8 +44,9 @@ export class PerfilComponent implements OnInit {
     cedula: [this.worker?.cedula || '' , [Validators.required, Validators.minLength(6)] ], 
     phone: [this.worker?.phone || '' , [Validators.required] ], 
     address: [this.worker?.address || '' , [Validators.required] ], 
-    city: [this.worker?.city || '' ], 
-    department: [this.worker?.department || '']
+    city: [this.worker?.city || '', [Validators.required] ], 
+    department: [this.worker?.department || '', [Validators.required]],
+    barrio: [this.worker?.barrio || '', [Validators.required]],
   });
 
   edit(){
@@ -57,6 +58,7 @@ export class PerfilComponent implements OnInit {
       address: this.worker?.address || '', 
       city: this.worker?.city || '', 
       department: this.worker?.department || '',
+      barrio: this.worker?.barrio || '',
     })
 
   }
@@ -121,12 +123,12 @@ export class PerfilComponent implements OnInit {
     
     if (ext === 'jpg' || ext === 'png' || ext === 'jepg' || ext === 'webp' ) {      
       this.typeFile = 'img';
-    }else if (ext === 'pdf' || ext === 'docx' || ext === 'xlsx' ) {
+    }else if (ext === 'pdf' || ext === 'PDF' || ext === 'docx' || ext === 'xlsx' ) {
       this.typeFile = 'archivos';      
     }
     
     // VALID EXT
-    const archExt = ['pdf', 'docx', 'xlsx', 'jpg', 'png', 'jepg', 'webp'];
+    const archExt = ['pdf', 'PDF', 'docx', 'xlsx', 'jpg', 'png', 'jepg', 'webp'];
 
     if (!archExt.includes(ext)) {
       Swal.fire('Atención', 'Solo se permiten archivos PDF - Word - Excel - JPG - PNG - WEBP', 'warning');

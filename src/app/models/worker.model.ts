@@ -23,7 +23,8 @@ export class Worker {
         public fecha: Date,
         public wid: string,
         public attachments: any[],
-        public skills: _skills[]
+        public skills: _skills[],
+        public barrio: string,
         
     ){}
 

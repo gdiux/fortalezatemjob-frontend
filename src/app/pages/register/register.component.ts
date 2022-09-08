@@ -33,6 +33,8 @@ export class RegisterComponent implements OnInit {
   public registerForm = this.fb.group({
     name:       ['',    [Validators.required, Validators.minLength(3)]],
     email:      ['',    [Validators.required, Validators.email]],
+    cedula:     ['',    [Validators.required]],
+    phone:     ['',    [Validators.required]],
     password:   ['',    [Validators.required, Validators.minLength(6)]],
     repassword: ['',    [Validators.required, Validators.minLength(6)]],
     terminos:   [false, [Validators.requiredTrue]]
