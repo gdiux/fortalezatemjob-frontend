@@ -5,6 +5,8 @@ import { Worker } from 'src/app/models/worker.model';
 
 // SERVICES
 import { WorkerService } from '../../services/worker.service';
+import { BussinessService } from '../../services/bussiness.service';
+import { Bussiness } from 'src/app/models/bussiness.model';
 
 @Component({
   selector: 'app-header',
@@ -15,32 +17,58 @@ import { WorkerService } from '../../services/worker.service';
 export class HeaderComponent implements OnInit {
 
   public worker!: Worker;
+  public bussiness!: Bussiness;
 
-  constructor(  private workerService: WorkerService) { 
+  constructor(  private workerService: WorkerService,
+                private bussinessService: BussinessService) { 
     this.worker = workerService.worker;
+    this.bussiness = bussinessService.bussiness;
   }
 
   // LOGIN
   public login: boolean = false;
+  public loginBuss: boolean = false;
 
   ngOnInit(): void {
 
     // LOAD WORKER
-    this.cargarWorker();
+    this.cargarUser();
 
   }
 
   /** ================================================================
    *  CARGAR WORKER
   ==================================================================== */
-  cargarWorker(){
+  cargarUser(){
 
     if (!localStorage.getItem('token')) {
       this.login = false;
-      return;
+
+      if (!localStorage.getItem('tokenBuss')) {
+        this.loginBuss = false;
+        return;
+        
+      }
+      
+      this.loginBuss = true;
+
+      this.bussinessService.validateTokenBussiness()
+          .subscribe( resp  => {
+
+            if (resp) {
+              this.bussiness = this.bussinessService.bussiness
+            }else{
+              localStorage.removeItem('token');
+              localStorage.removeItem('tokenBuss');
+              window.location.reload();
+            }
+
+          });
+
 
     }else{
       this.login = true;
+      this.loginBuss = false;
       this.workerService.validateTokenWorker()
       .subscribe( resp => {
         
@@ -50,6 +78,7 @@ export class HeaderComponent implements OnInit {
         }else{
 
           localStorage.removeItem('token');
+          localStorage.removeItem('tokenBuss');
           window.location.reload();
         }
         
@@ -65,6 +94,7 @@ export class HeaderComponent implements OnInit {
   logout(){
 
     localStorage.removeItem('token');
+    localStorage.removeItem('tokenBuss');
     window.location.reload();
 
   }

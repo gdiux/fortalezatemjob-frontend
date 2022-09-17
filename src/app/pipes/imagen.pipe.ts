@@ -9,7 +9,7 @@ const base_url = environment.base_url;
 })
 export class ImagenPipe implements PipeTransform {
 
-  transform(img: string, tipo: 'worker' | 'archivos'): string {
+  transform(img: string, tipo: 'worker' | 'archivos' | 'bussiness'): string {
     if (img) {            
         return `${base_url}/uploads/${tipo}/${img}`;
     }else{

@@ -1,15 +1,161 @@
 <section class="" style="min-height: 75vh;">
     <div class="d-flex justify-content-center align-item-center ">
         <div class="my-5 col-md-6">
-            <h2>Empresas</h2>
+            <h2>EMPRESAS</h2>
 
             <div class="border px-4 py-5">
-                <h3 class="text-center mb-0">Inicio de session con Google</h3>
-                <p class="text-center">Inicia session de la forma mas segura con tu cuenta de gmail</p>
-                <a routerLink="/dashboard" class="btn btn-primary btn-lg btn-block w-100 mx-auto"> Iniciar session </a>
+
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()">
+                        <img class="mb-4" src="../../../assets/img/logo/logo.webp" alt="" height="57">
+                        <h1 class="h3 mb-3 fw-normal">Inicia session</h1>
+
+                        <div class="form-floating mb-3">
+                            <input formControlName="email" type="email" [ngClass]="{'is-invalid': validate('email')}" class="form-control" id="floatingInputEmBus" placeholder="name@example.com">
+                            <label for="floatingInputEmBus">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input formControlName="password" type="password" [ngClass]="{'is-invalid': validate('password')}" class="form-control" id="floatingPasswordBuss" placeholder="Contraseña">
+                            <label for="floatingPasswordBuss">Contraseña</label>
+                        </div>
+
+                        <div class="checkbox mb-3">
+                            <label>
+                            <input type="checkbox" value="remember-me" formControlName="remember" [checked]="remember"> Recuerdame
+                          </label>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
+
+                    </form>
+
+                    <div class="d-flex justify-content-between gap-3">
+                        <a type="button" class="pointer" data-bs-toggle="modal" data-bs-target="#registrarBussiness"> Crear cuenta nueva</a>
+
+                        <a type="button" class="pointer" data-bs-toggle="modal" data-bs-target="#recuperarcontraseña"> Olvide mi contraseña?</a>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
 
     </div>
 </section>
+
+<!-- RECUPERAR CONTRASEÑA -->
+<div class="modal fade" id="registrarBussiness" tabindex="-1" aria-labelledby="registrarBussinessLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registrarBussiness">Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="registerForm" (ngSubmit)="registro()">
+                        <img class="mb-4" src="../../../assets/img/logo/logo.webp" alt="" height="57">
+                        <h1 class="h3 mb-3 fw-normal">Registrar mi empresa</h1>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="name" [ngClass]="{'is-invalid': validateForm('name')}" type="text" class="form-control" id="floatingInputName" placeholder="Nombres y Apellidos">
+                            <label for="floatingInputName">Razon social ó Nombre</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="nit" [ngClass]="{'is-invalid': validateForm('nit')}" type="text" class="form-control" id="floatingInputCedula" placeholder="Cedula">
+                            <label for="floatingInputCedula">nit</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="phone" [ngClass]="{'is-invalid': validateForm('phone')}" type="text" class="form-control" id="floatingInputPhone" placeholder="Telefono">
+                            <label for="floatingInputPhone">Telefono</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input formControlName="email" [ngClass]="{'is-invalid': validateForm('email')}" type="email" class="form-control text-lowercase" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Email</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input formControlName="password" [ngClass]="{'is-invalid': validateForm('password')}" type="password" class="form-control" id="floatingPassword" placeholder="Contraseña">
+                            <label for="floatingPassword">Contraseña</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input formControlName="repassword" [ngClass]="{'is-invalid': validateForm('repassword')}" type="password" class="form-control" id="floatingPassword2" placeholder="Repetir Contraseña">
+                            <label for="floatingPassword2">Repetir Contraseña</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input formControlName="terminos" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                <small>
+                                    Acepto los <a href="" class="text-info">Términos de servicio</a>  y la <a href="" class="text-info">Política de privacidad</a>. También acepto que solo crearé una cuenta.
+                                </small>
+                            </label>
+
+                        </div>
+
+                        <div *ngIf="validateForm('terminos')" class="text-danger">
+                            <small>** Debes de aceptar todos los terminos y politicas de privacidad </small>
+                        </div>
+
+                        <div *ngIf="valuePass" class="text-danger">
+                            <small>** Las contraseñas no son iguales...</small>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary mt-4" [disabled]="btnSubmit" type="submit">Registrarme</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RECUPERAR CONTRASEÑA -->
+
+
+<!-- RECUPERAR CONTRASEÑA -->
+<div class="modal fade" id="recuperarcontraseña" tabindex="-1" aria-labelledby="recuperarcontraseñaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recuperar contraseñaLabel">Recuperar Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form autocomplete="off" [formGroup]="formPassRee" (ngSubmit)="rePass()">
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email</label>
+                        <input formControlName="email" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        <small *ngIf="validatePass('email')" class="text-danger">El email es obligatorio</small>
+                    </div>
+
+                    <button type="submit" [disabled]="btnFormPass" class="btn btn-primary mb-3">
+                        <span *ngIf="!btnFormPass">
+                            Recuperar                            
+                        </span>
+                        <span *ngIf="btnFormPass">
+                            Enviando...
+                        </span>
+
+                    </button>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RECUPERAR CONTRASEÑA -->

@@ -36,16 +36,24 @@
 
                 <div class="ms-auto">
 
-                    <a *ngIf="!login" class="text-decoration-none text-primario fw-bold me-2" routerLink="/portal/trabajadores" routerLinkActive="active">Trabajadores</a>
-                    <a *ngIf="!login" routerLink="/portal/empresas" routerLinkActive="active" class="btn btn-sm btn-outline-success rounded-pill">Empresas</a>
+                    <a *ngIf="!login && !loginBuss" class="text-decoration-none text-primario fw-bold me-2" routerLink="/portal/trabajadores" routerLinkActive="active">Trabajadores</a>
+                    <a *ngIf="!login && !loginBuss" routerLink="/portal/empresas" routerLinkActive="active" class="btn btn-sm btn-outline-success rounded-pill">Empresas</a>
 
-                    <ul *ngIf="login" class="navbar-nav ">
-                        <li *ngIf="worker" class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <!-- LOGIN -->
+                    <ul *ngIf="login || loginBuss" class="navbar-nav ">
+
+                        <li *ngIf="worker || bussiness" class="nav-item dropdown">
+                            <a *ngIf="login" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               {{ worker.name }}
                             </a>
+                            <a *ngIf="loginBuss" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              {{ bussiness.name }}
+                            </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" routerLink="/dashboard/perfil">Perfil</a></li>
+                                <li>
+                                    <a *ngIf="login" class="dropdown-item" routerLink="/dashboard/perfil">Perfil</a>
+                                    <a *ngIf="loginBuss" class="dropdown-item" routerLink="/bussiness">Perfil</a>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

@@ -36,7 +36,7 @@ export class FileUploadService {
   ==================================================================== */
   async updateImage(
     archivo: File,
-    type: 'worker' | 'archivos' ,
+    type: 'worker' | 'archivos' | 'bussiness' ,
   ){
       
       const url = `${base_url}/uploads/${type}`;

@@ -1,0 +1,239 @@
+<section class="mt-5 container pb-5">
+
+    <!-- PERFIL -->
+    <div class="py-5 px-3">
+
+        <div class="row">
+
+            <!-- FOTO DE PERFIL -->
+            <div class="col-lg-4 col-xlg-3 col-md-5">
+
+                <div class=" py-4 px-3 animated shadow fadeIn " style="border-radius:1rem;">
+
+                    <div class="card rounded mx-auto" style="width:8rem;">
+                        <button type="button" class="border-0 p-0 btnImg" data-bs-toggle="modal" data-bs-target="#imagenPerfil">
+                            
+                            <div class="mx-auto " >
+                                <p class="mb-0 text-white text-center" style="position: absolute; top:40%; left: 5%;">
+                                    cambiar imagen
+                                </p>
+                            </div>
+
+                            <img class="card-img rounded" [src]="bussiness.img! | imagen: 'bussiness'" alt="">
+                        </button>
+                    </div>
+
+
+
+                    <h3 class="mb-0 text-break text-sm-start text-center text-primario display-4">{{ bussiness.name }}</h3>
+
+                    <h6 class="mb-0 text-break text-sm-start text-center text-mute">Telefono: <a class="text-decoration-none" href="tel:{{bussiness.phone}}">{{ bussiness.phone || 'Pendiente' }}</a></h6>
+                    <h6 class="mb-0 text-break text-sm-start text-center text-mute">Email: <a class="text-decoration-none" href="mailto:{{bussiness.email}}"> {{ bussiness.email }} </a></h6>
+                    <h6 class="text-mute"> Dirección: <span class="fw-normal">{{ bussiness.address || 'Pendiente' }}</span> </h6>
+
+                    <div class="d-flex">
+                        <button (click)="edit()" type="button" class="btn-link text-primario bg-white border-0 btn-sm py-0 " data-bs-toggle="modal" data-bs-target="#cambiarPassword"> <small>cambiar contraseña</small> </button>
+                        <button (click)="edit()" type="button" class=" btn-link text-primario bg-white border-0 btn-sm ms-auto py-0 " data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="bi bi-pencil-square"></i> </button>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- FOTO DE PERFIL -->
+
+
+            <!-- INFORMACION -->
+            <div class="col-lg-8 col-xlg-9 col-md-7">
+
+                <!-- DESCRIPCION -->
+                <!-- <div class="pb-5 px-3 shadow py-4 mb-4" style="border-radius: 1rem;"></div> -->
+                <!-- DESCRIPCION -->
+
+                <!-- CHECK LIST -->
+                <div class="pb-5 px-3 shadow py-4" style="border-radius: 1rem;">
+
+                    <!-- <h4 class="mb-4 text-muted">Requisitos</h4> -->
+
+
+                    <div class="d-flex mt-4">
+                        <div>
+                            <h4 class="mb-4 text-muted"> Ofertas Laborales </h4>
+                        </div>
+
+                        <div class="ms-auto">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#crearOferta">Crear Oferta</button>
+                        </div>
+
+                    </div>
+
+
+                    <!-- TABLA DE ARCHIVOS -->
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Aprobado</th>
+                                    <th scope="col">Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td colspan="5">
+                                        <h4 class="mb-0 text-muted text-center"> No has creado ninguna oferta laboral... </h4>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- TABLA DE ARCHIVOS -->
+
+                </div>
+                <!-- CHECK LIST -->
+
+            </div>
+            <!-- INFORMACION -->
+        </div>
+
+    </div>
+
+</section>
+
+<!-- MODAL EDITAR PERFIL -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Editar perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="editarForm" (ngSubmit)="editar()">
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="name" [ngClass]="{'is-invalid': validateForm('name')}" type="text" class="form-control" id="floatingInputName" placeholder="Razon Social o Nombre">
+                            <label for="floatingInputName">Razon Social</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="nit" [ngClass]="{'is-invalid': validateForm('nit')}" type="text" class="form-control" id="floatingInputCedula" placeholder="Nit o Cedula">
+                            <label for="floatingInputCedula">Nit</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="phone" [ngClass]="{'is-invalid': validateForm('phone')}" type="text" class="form-control" id="floatingInpuPhone" placeholder="Telefono">
+                            <label for="floatingInputPhone">Phone</label>
+                        </div>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="city" [ngClass]="{'is-invalid': validateForm('city')}" type="text" class="form-control" id="floatingInputCity" placeholder="Ciudad">
+                            <label for="floatingInputCity">City</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="department" [ngClass]="{'is-invalid': validateForm('department')}" type="text" class="form-control" id="floatingInputDepartment" placeholder="Departamento">
+                            <label for="floatingInputDepartment">Departamento</label>
+                        </div>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="address" [ngClass]="{'is-invalid': validateForm('address')}" type="text" class="form-control" id="floatingInputAddress" Dirección="Dirección">
+                            <label for="floatingInputAddress">Dirección</label>
+                        </div>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="barrio" [ngClass]="{'is-invalid': validateForm('barrio')}" type="text" class="form-control" id="floatingInputBarrio" Dirección="Barrio">
+                            <label for="floatingInputBarrio">Barrio</label>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary mt-4" type="submit">Editar</button>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL EDITAR PERFIL -->
+
+<!-- MODAL CAMBIAR IMAGEN DE PERFIL -->
+<div class="modal fade" id="imagenPerfil" tabindex="-1" aria-labelledby="imagenPerfilLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imagenPerfilLabel">Foto de perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="animated fadeIn">
+                    <div class="card rounded mx-auto" style="width:8rem;">
+                        <label for="formFileSm" class="form-label mb-0">
+                            <img *ngIf="!imgTempP" class="card-img rounded" [src]="bussiness.img! | imagen: 'bussiness'" alt="">
+                            <img *ngIf="imgTempP" [src]="imgTempP" class="card-img rounded" alt="">
+                        </label>
+                    </div>
+
+                    <div>
+                        <!-- Description-->
+                        <div class="small font-italic text-muted mb-4 text-center">JPG - PNG - WEBP - no mayor a 8 mb</div>
+                        <div class="mb-3" style="display: none;">
+                            <input #fileImg class="form-control form-control-sm" id="formFileSm" type="file" (change)="cambiarImage($event)">
+                        </div>
+                        <!-- BTN upload Image -->
+                        <div class="d-flex justify-content-center">
+
+                            <button *ngIf="imgTempP" class="btn btnW btn-primary waves-effect waves-light mx-auto" [disabled]=" !subirImagen " (click)="subirImg() " type="button ">Actualizar Imagen</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <div class="d-flex ">
+                    <button type="button " class="btn btn-secondary ms-auto " data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CAMBIAR CONTRASEÑA -->
+<div class="modal fade" id="cambiarPassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cambiarPasswordLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cambiarPasswordLabel">Cambiar Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="formPassReset" (ngSubmit)="resetPassword()">
+
+                        <div class="form-floating ">
+                            <input formControlName="password" [ngClass]="{'is-invalid': validateFormPass('password')}" type="password" class="form-control" id="floatingInputPassword2" placeholder="Contraseña">
+                            <label for="floatingInputPassword2">Contraseña</label>
+                        </div>
+                        <div class="form-floating mt-4">
+                            <input formControlName="repassword" [ngClass]="{'is-invalid': validateFormPass('repassword')}" type="password" class="form-control" id="floatingInputRepPassword2" placeholder="Repetir Contraseña">
+                            <label for="floatingInputRepPassword2">Repetir contraseña</label>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary mt-4" type="submit">Cambiar</button>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL CAMBIAR CONTRASEÑA -->
