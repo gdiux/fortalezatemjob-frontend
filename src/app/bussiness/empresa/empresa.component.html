@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="ms-auto">
-                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#crearOferta">Crear Oferta</button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createJob">Crear Oferta</button>
                         </div>
 
                     </div>
@@ -73,17 +73,32 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Oferta</th>
+                                    <th scope="col">Pago</th>
                                     <th scope="col">Fecha</th>
-                                    <th scope="col">Aprobado</th>
+                                    <th scope="col">Estatus</th>
                                     <th scope="col">Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                <tr>
+                                <tr *ngIf="jobs.length === 0">
                                     <td colspan="5">
                                         <h4 class="mb-0 text-muted text-center"> No has creado ninguna oferta laboral... </h4>
+                                    </td>
+                                </tr>
+
+                                <tr *ngFor="let job of jobs">
+                                    <td> {{ job.control }} </td>
+                                    <td> {{ job.name }} </td>
+                                    <td> {{ job.sueldo | currency }} </td>
+                                    <td> {{ job.fecha | date: 'short' }} </td>
+                                    <td>
+                                        <span class="badge " [ngClass]="{'text-bg-warning': job.type === 'Pendiente', 'text-bg-success': job.type === 'Aprobado' }"> {{ job.type }} </span>
+                                    </td>
+                                    <td>
+                                        <button (click)="selectJob(job)" type="button" class="btn btn-sm btn-outline-primary border-0" data-bs-toggle="modal" data-bs-target="#editJob"> <small class="bi bi-pencil"></small> </button>
+                                        <button (click)="deleteJob(job.jid)" type="button" class="btn btn-sm btn-outline-danger border-0"> <small class="bi bi-trash"></small> </button>
                                     </td>
                                 </tr>
 
@@ -237,3 +252,89 @@
     </div>
 </div>
 <!-- MODAL CAMBIAR CONTRASEÑA -->
+
+<!-- CREAR OFERTA NUEVA -->
+<div class="modal fade" id="createJob" tabindex="-1" aria-labelledby="createJobLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createJobLabel">Crear Oferta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="formJob" (ngSubmit)="create()">
+
+                        <h1 class="h3 mb-3 fw-normal">Nueva Oferta</h1>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="name" [ngClass]="{'is-invalid': validateFormJob('name')}" type="text" class="form-control" id="floatingInputNameJob" placeholder="Nombre de la oferta">
+                            <label for="floatingInputNameJob">Nombre de la oferta</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <textarea formControlName="description" [ngClass]="{'is-invalid': validateFormJob('description')}" class="form-control" placeholder="Descripcion" id="floatingTextarea" style="min-height: 100px"></textarea>
+                            <label for="floatingTextarea">Escribe una descripción</label>
+                        </div>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="sueldo" [ngClass]="{'is-invalid': validateFormJob('sueldo')}" type="number" min="1" class="form-control" id="floatingInputSueldo" placeholder="Pago">
+                            <label for="floatingInputSueldo">Pago</label>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary mt-4" [disabled]="btnSubmit" type="submit">Crear</button>
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CREAR OFERTA NUEVA -->
+
+<!-- EDITAR OFERTA -->
+<div class="modal fade" id="editJob" tabindex="-1" aria-labelledby="editJobLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editJobLabel">Editar Oferta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div>
+                    <form class="mb-4" autocomplete="off" [formGroup]="formJobEdit" (ngSubmit)="editJob()">
+
+                        <h1 class="h3 mb-3 fw-normal">Información de la Oferta</h1>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="name" [ngClass]="{'is-invalid': validateFormJob('name')}" type="text" class="form-control" id="floatingInputNameJobEdit" placeholder="Nombre de la oferta">
+                            <label for="floatingInputNameJobEdit">Nombre de la oferta</label>
+                        </div>
+                        <div class="form-floating mb-3 ">
+                            <textarea formControlName="description" [ngClass]="{'is-invalid': validateFormJob('description')}" class="form-control" placeholder="Descripcion" id="floatingTextareaEdit" style="min-height: 100px"></textarea>
+                            <label for="floatingTextareaEdit">Escribe una descripción</label>
+                        </div>
+
+                        <div class="form-floating mb-3 ">
+                            <input formControlName="sueldo" [ngClass]="{'is-invalid': validateFormJob('sueldo')}" type="number" min="1" class="form-control" id="floatingInputSueldoEdit" placeholder="Pago">
+                            <label for="floatingInputSueldoEdit">Pago</label>
+                        </div>
+
+                        <button class="w-100 btn btn-lg btn-primary mt-4" [disabled]="btnSubmit" type="submit">Actualizar</button>
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EDITAR OFERTA -->
