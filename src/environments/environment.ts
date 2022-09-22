@@ -18,8 +18,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'http://localhost:3000/api',
-  local_url: 'http://localhost',
+  local_url: 'https://grupofortalezasas.com',
+  base_url: 'https://grupofortalezasas.com/api',
 };
 
 /*

@@ -27,6 +27,7 @@
 
                     <h3 class="mb-0 text-break text-sm-start text-center text-primario display-4">{{ bussiness.name }}</h3>
 
+                    <h6 class="mb-0 text-break text-sm-start text-center text-mute">Nit: {{ bussiness.nit || 'Pendiente' }}</h6>
                     <h6 class="mb-0 text-break text-sm-start text-center text-mute">Telefono: <a class="text-decoration-none" href="tel:{{bussiness.phone}}">{{ bussiness.phone || 'Pendiente' }}</a></h6>
                     <h6 class="mb-0 text-break text-sm-start text-center text-mute">Email: <a class="text-decoration-none" href="mailto:{{bussiness.email}}"> {{ bussiness.email }} </a></h6>
                     <h6 class="text-mute"> Dirección: <span class="fw-normal">{{ bussiness.address || 'Pendiente' }}</span> </h6>
@@ -91,7 +92,7 @@
                                 <tr *ngFor="let job of jobs">
                                     <td> {{ job.control }} </td>
                                     <td> {{ job.name }} </td>
-                                    <td> {{ job.sueldo | currency }} </td>
+                                    <td> {{ job.sueldo | currency: 'COP' }} </td>
                                     <td> {{ job.fecha | date: 'short' }} </td>
                                     <td>
                                         <span class="badge " [ngClass]="{'text-bg-warning': job.type === 'Pendiente', 'text-bg-success': job.type === 'Aprobado' }"> {{ job.type }} </span>
@@ -270,7 +271,7 @@
 
                         <div class="form-floating mb-3 ">
                             <input formControlName="name" [ngClass]="{'is-invalid': validateFormJob('name')}" type="text" class="form-control" id="floatingInputNameJob" placeholder="Nombre de la oferta">
-                            <label for="floatingInputNameJob">Nombre de la oferta</label>
+                            <label for="floatingInputNameJob">Cargo o nombre de la oferta</label>
                         </div>
                         <div class="form-floating mb-3 ">
                             <textarea formControlName="description" [ngClass]="{'is-invalid': validateFormJob('description')}" class="form-control" placeholder="Descripcion" id="floatingTextarea" style="min-height: 100px"></textarea>
@@ -313,7 +314,7 @@
 
                         <div class="form-floating mb-3 ">
                             <input formControlName="name" [ngClass]="{'is-invalid': validateFormJob('name')}" type="text" class="form-control" id="floatingInputNameJobEdit" placeholder="Nombre de la oferta">
-                            <label for="floatingInputNameJobEdit">Nombre de la oferta</label>
+                            <label for="floatingInputNameJobEdit">Cargo o nombre de la oferta</label>
                         </div>
                         <div class="form-floating mb-3 ">
                             <textarea formControlName="description" [ngClass]="{'is-invalid': validateFormJob('description')}" class="form-control" placeholder="Descripcion" id="floatingTextareaEdit" style="min-height: 100px"></textarea>

@@ -15,6 +15,8 @@ import { JobsService } from '../../services/jobs.service';
 
 import { environment } from '../../../environments/environment';
 import { Job } from 'src/app/models/jobs.model';
+import { EntrevistasService } from '../../services/entrevistas.service';
+import { Entrevista } from '../../models/entrevista.model';
 const base_url = environment.base_url;
 
 @Component({
@@ -29,7 +31,8 @@ export class PerfilComponent implements OnInit {
   constructor(  private workerService: WorkerService,
                 private fb: FormBuilder,
                 private fileUploadService: FileUploadService,
-                private jobsService: JobsService) { 
+                private jobsService: JobsService,
+                private entrevistasService: EntrevistasService) { 
 
     this.worker = workerService.worker;
 
@@ -42,6 +45,9 @@ export class PerfilComponent implements OnInit {
 
     // CARGAR TRABAJOS
     this.cargarJobsWorker();
+    
+    // CARGAR ENTREVISTAS
+    this.cargarEntrevistas();
   }
 
   /** ======================================================================
@@ -396,6 +402,65 @@ export class PerfilComponent implements OnInit {
 
   };
 
+  /** ================================================================
+   *  ======================================================================================
+   * ======================================================================================
+   * ======================================================================================
+   * ======================================================================================
+   * ======================================================================================
+   *   ENTREVISTAS
+  ==================================================================== */
+  public entrevistas: Entrevista[] = [];
+
+  cargarEntrevistas(){
+
+    this.entrevistasService.loadEntrevistasWorker(this.worker.wid)
+        .subscribe( ({entrevistas}) => {
+
+          this.entrevistas = entrevistas;
+          console.log(entrevistas);
+          
+        });
+
+  }
+
+  /** ================================================================
+   *   CONFIRMAR ENTREVISTA ENTREVISTA
+  ==================================================================== */
+  confirmarEntrevista(status: boolean, id: string){
+
+    Swal.fire({
+      title: 'Atención?',
+      text: "Estas seguro de confirmar la entrevista para la fecha programada?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, confirmar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.entrevistasService.updateEntrevista({confirm: status}, id)
+        .subscribe( ({entrevista}) => {
+
+          this.cargarEntrevistas();
+          Swal.fire('Estupendo', 'Se ha confirmado exitosamente la entrevista', 'success');          
+          
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+          
+        })
+
+      }
+    })
+   
+
+    
+
+  }
+
 
   /** ======================================================================
    * ======================================================================
@@ -412,7 +477,6 @@ export class PerfilComponent implements OnInit {
     this.jobsService.loadJobsWorker( this.worker.wid )
         .subscribe( ({jobs}) => {
 
-          console.log(jobs);
           this.jobs = jobs;
 
         });

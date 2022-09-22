@@ -5,9 +5,10 @@
 
         <div class="row">
 
-            <!-- FOTO DE PERFIL -->
+            <!-- COLUMNA IZQUIERDA -->
             <div class="col-lg-4 col-xlg-3 col-md-5">
 
+                <!-- INFORMACION DEL TRABAJADOR -->
                 <div class=" py-4 px-3 animated shadow fadeIn " style="border-radius:1rem;">
                     <p class="badge rounded-pill" [ngClass]="{'text-bg-warning': worker.type === 'Aspirante', 'text-bg-success': worker.type === 'Trabajador'}"> {{ worker.type }} </p>
                     <div class="card rounded mx-auto" style="width:8rem;">
@@ -38,7 +39,9 @@
                     </div>
 
                 </div>
+                <!-- INFORMACION DEL TRABAJADOR -->
 
+                <!-- HABILIDADES EXPERIENCIA SKILLS -->
                 <div class="pb-5 px-3 shadow py-4 my-4" style="border-radius: 1rem;">
                     <div class="d-flex justify-content-between mb-4">
                         <h6 class="text-muted mb-0"> Experiencia o Habilidades </h6>
@@ -77,33 +80,6 @@
 
                     </div>
 
-                    <!-- ENTREVISTA -->
-                    <div>
-                        <ul class="list-group list-group-flush">
-
-                            <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="worker.skills.length === 0">
-                                <h5 class="mb-0 text-muted text-center"> Aun no has agregado una habilidad o experiencia </h5>
-                            </li>
-
-                            <li *ngFor="let exp of worker.skills" class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <button (click)="eliminarExp(exp._id!)" type="button" class="btn-link text-danger bg-white border-0 btn-sm p-0 m-0 h6">
-                                        <i class="bi bi-x"></i>
-                                    </button> {{ exp.name }}
-                                </div>
-                                <span class="badge bg-primary rounded-pill">
-                                    {{ exp.years }}
-
-                                    <span *ngIf="exp.years > 1">años</span>
-                                <span *ngIf="exp.years === 1">año</span>
-
-                                </span>
-                            </li>
-
-                        </ul>
-                    </div>
-                    <!-- ENTREVISTA -->
-
                     <!-- SKILLS -->
                     <div>
                         <ul class="list-group list-group-flush">
@@ -132,9 +108,10 @@
                     <!-- SKILLS -->
 
                 </div>
+                <!-- HABILIDADES EXPERIENCIA SKILLS -->
 
             </div>
-            <!-- FOTO DE PERFIL -->
+            <!-- COLUMNA IZQUIERDA -->
 
 
             <!-- INFORMACION -->
@@ -144,8 +121,55 @@
                 <!-- <div class="pb-5 px-3 shadow py-4 mb-4" style="border-radius: 1rem;"></div> -->
                 <!-- DESCRIPCION -->
 
+                <!-- ENTREVISTA -->
+                <div class="py-4 px-3 animated shadow fadeIn " style="border-radius:1rem;">
+                    <h4 class="text-muted mb-0"> Entrevistas</h4>
+
+                    <div class="table-responsive">
+                        <table class="table vm no-th-brd no-wrap pro-of-month">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Enlace</th>
+                                    <th>Confirmada</th>
+                                    <th>Estatus</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngIf="entrevistas.length === 0">
+                                    <td colspan="5">
+                                        <p class="mb-0 text-center">No se a creado ninguna entrevista...</p>
+                                    </td>
+                                </tr>
+
+                                <tr *ngFor="let item of entrevistas">
+                                    <td> {{ item.day | date:'M/d/yy, h:mm a' }} </td>
+                                    <td> <a class="text-truncate" [href]="item.enlace" target="_blank">{{item.enlace}}</a></td>
+                                    <td>
+                                        <span *ngIf="!item.confirm" class="badge text-bg-warning">Pediente</span>
+                                        <span *ngIf="item.confirm" class="badge text-bg-success">Confirmada</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="!item.status" class="badge text-bg-warning">Pendiente</span>
+                                        <span *ngIf="item.status" class="badge text-bg-success">Completada</span>
+                                    </td>
+                                    <td>
+                                        <button [disabled]="item.confirm" (click)="confirmarEntrevista(true, item.eid)" type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn text-success" data-toggle="tooltip" data-original-title="Aprobar">
+                                            <i class="bi bi-check" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <!-- ENTREVISTA -->
+
                 <!-- CHECK LIST -->
-                <div class="pb-5 px-3 shadow py-4" style="border-radius: 1rem;">
+                <div class="mt-4 pb-5 px-3 shadow py-4" style="border-radius: 1rem;">
 
                     <!-- <h4 class="mb-4 text-muted">Requisitos</h4> -->
 
