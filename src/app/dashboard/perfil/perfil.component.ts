@@ -2,14 +2,19 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 // MODELS
 import { Worker } from 'src/app/models/worker.model';
 
 // SERVICES
 import { WorkerService } from '../../services/worker.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { JobsService } from '../../services/jobs.service';
 
 import { environment } from '../../../environments/environment';
+import { Job } from 'src/app/models/jobs.model';
 const base_url = environment.base_url;
 
 @Component({
@@ -23,7 +28,8 @@ export class PerfilComponent implements OnInit {
 
   constructor(  private workerService: WorkerService,
                 private fb: FormBuilder,
-                private fileUploadService: FileUploadService) { 
+                private fileUploadService: FileUploadService,
+                private jobsService: JobsService) { 
 
     this.worker = workerService.worker;
 
@@ -33,6 +39,9 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.url = base_url;
+
+    // CARGAR TRABAJOS
+    this.cargarJobsWorker();
   }
 
   /** ======================================================================
@@ -386,6 +395,70 @@ export class PerfilComponent implements OnInit {
     })
 
   };
+
+
+  /** ======================================================================
+   * ======================================================================
+   * ======================================================================
+   * ======================================================================
+   * ======================================================================
+   * ======================================================================
+   * JOBS
+  ====================================================================== */
+  public jobs: Job[] = [];
+
+  cargarJobsWorker(){
+
+    this.jobsService.loadJobsWorker( this.worker.wid )
+        .subscribe( ({jobs}) => {
+
+          console.log(jobs);
+          this.jobs = jobs;
+
+        });
+
+  }
+
+  /** ================================================================
+   *  SELECCIONAR TRABAJO
+  ==================================================================== */
+  public jobSelect!: Job;
+  public dateActual: Date = new Date();
+
+  selectJob(job: Job){
+
+    this.jobSelect = job;
+
+  }
+
+  /** ================================================================
+   *   PDF
+  ==================================================================== */
+  downloadPDF() {
+    
+    // Extraemos el
+    const DATA = document.getElementById('pdf') as HTMLElement;
+    const doc = new jsPDF('p', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    html2canvas( DATA , options).then((canvas) => {
+
+      const img = canvas.toDataURL('image/PNG');
+
+      // Add image Canvas to PDF
+      const bufferX = 15;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      docResult.save(`${new Date().toISOString()}.pdf`);
+    });
+  }
 
 
   // FIN DE LA CLASE

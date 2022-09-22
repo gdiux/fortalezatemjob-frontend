@@ -39,10 +39,35 @@ export class JobsService {
   }
 
   /** ================================================================
-   *   POST JOB
+   *   GET TOKEN WORKER
+  ==================================================================== */
+  get tokenWorker():string {
+    return localStorage.getItem('token') || '';
+  }
+
+  /** ================================================================
+   *   GET HEADERS WORKER
+  ==================================================================== */
+  get headersWorker() {
+    return {
+      headers: {
+        'x-token': this.tokenWorker
+      }
+    }
+  }
+
+  /** ================================================================
+   *   LOAD JOB BUSSINESS
   ==================================================================== */
   loadJobsBussiness(bussiness: string){
     return this.http.get<LoadJobs>(`${base_url}/jobs/all/${bussiness}`, this.headers);
+  }
+
+  /** ================================================================
+   *   LOAD JOB BUSSINESS
+  ==================================================================== */
+  loadJobsWorker(worker: string){
+    return this.http.get<LoadJobs>(`${base_url}/jobs/worker/${worker}`, this.headersWorker);
   }
 
   /** ================================================================

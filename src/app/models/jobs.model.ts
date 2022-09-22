@@ -17,5 +17,4 @@ export class Job {
         public fecha: Date,
         public jid: string
     ){}
-
 }

@@ -27,6 +27,7 @@
 
                     <h3 class="mb-0 text-break text-sm-start text-center text-primario display-4">{{ worker.name }}</h3>
 
+                    <h6 class="mb-0 text-break text-sm-start text-center text-mute">CC: {{ worker.cedula || 'Pendiente' }}</h6>
                     <h6 class="mb-0 text-break text-sm-start text-center text-mute">Telefono: <a class="text-decoration-none" href="tel:{{worker.phone}}">{{ worker.phone || 'Pendiente' }}</a></h6>
                     <h6 class="mb-0 text-break text-sm-start text-center text-mute">Email: <a class="text-decoration-none" href="mailto:{{worker.email}}"> {{ worker.email }} </a></h6>
                     <h6 class="text-mute"> Dirección: <span class="fw-normal">{{ worker.address || 'Pendiente' }}</span> </h6>
@@ -75,6 +76,33 @@
                         </div>
 
                     </div>
+
+                    <!-- ENTREVISTA -->
+                    <div>
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="worker.skills.length === 0">
+                                <h5 class="mb-0 text-muted text-center"> Aun no has agregado una habilidad o experiencia </h5>
+                            </li>
+
+                            <li *ngFor="let exp of worker.skills" class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <button (click)="eliminarExp(exp._id!)" type="button" class="btn-link text-danger bg-white border-0 btn-sm p-0 m-0 h6">
+                                        <i class="bi bi-x"></i>
+                                    </button> {{ exp.name }}
+                                </div>
+                                <span class="badge bg-primary rounded-pill">
+                                    {{ exp.years }}
+
+                                    <span *ngIf="exp.years > 1">años</span>
+                                <span *ngIf="exp.years === 1">año</span>
+
+                                </span>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- ENTREVISTA -->
 
                     <!-- SKILLS -->
                     <div>
@@ -214,6 +242,49 @@
 
                 </div>
                 <!-- CHECK LIST -->
+
+
+                <!-- TRABAJOS ASSIGNADOS -->
+                <div class="mt-4 pb-5 px-3 shadow py-4" style="border-radius: 1rem;">
+                    <!-- TABLA DE ARCHIVOS -->
+                    <h4 class="mb-4 text-muted">Trabajos Asignados</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Empresa</th>
+                                    <th scope="col">Pago</th>
+                                    <th scope="col">Fecha de inicio</th>
+                                    <th scope="col">Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngIf="jobs.length === 0">
+                                    <td colspan="5">
+                                        <h4 class="mb-0 text-muted text-center"> No tienes ningun trabajo... </h4>
+                                    </td>
+                                </tr>
+
+                                <tr *ngFor="let job of jobs; let i = index">
+                                    <th scope="row"> {{ job.control}} </th>
+                                    <td> {{ job.bussiness.name }} </td>
+                                    <td> {{ job.sueldo | currency: 'COP' }} </td>
+                                    <td> {{ job.fechain | date:'short' }} </td>
+                                    <td>
+                                        <button (click)="selectJob(job)" type="button" class="btn btn-sm btn-outline-primary border-0" data-bs-toggle="modal" data-bs-target="#certificado"> 
+                                            <i class="bi bi-award"></i> 
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- TABLA DE ARCHIVOS -->
+                </div>
+                <!-- TRABAJOS ASSIGNADOS -->
 
             </div>
             <!-- INFORMACION -->
@@ -405,6 +476,80 @@
                         <div class="d-flex justify-content-center">
 
                             <button *ngIf="imgTempP" class="btn btnW btn-primary waves-effect waves-light mx-auto" [disabled]=" !subirImagen " (click)="subirImg() " type="button ">Actualizar Imagen</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <div class="d-flex ">
+                    <button type="button " class="btn btn-secondary ms-auto " data-bs-dismiss="modal ">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CERTIFICADO-->
+<div class="modal fade" id="certificado" tabindex="-1" aria-labelledby="certificadoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="certificadoLabel">Certificado Laboral</h5>
+                <button type="button" (click)="downloadPDF()" class="btn btn-danger btn-sm ms-4">PDF</button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div *ngIf="jobSelect" class="px-4" id="pdf">
+
+
+                    <div class="container-fluid py-5">
+
+                        <div class="d-flex justify-content-center mb-4">
+                            <img src="../../../assets/img/logo/logo.webp" style="max-width: 200px;" alt="">
+                        </div>
+
+                        <h3 class="box-title mb-0 text-center fw-bold"> FORTALEZA TEMP JOB PLUS EST S.A.S</h3>
+                        <h4 class="box-title mb-4 text-center fw-bold"> NIT. 901.601.054-5</h4>
+
+                        <p class="text-center mx-auto">CERTIFICA QUE:</p>
+
+                        <br>
+                        <p class="text-justify ">
+                            El colaborador (a) <span class="fw-bold">{{ worker.name }}</span>, con Cédula de Ciudadanía número <span class="fw-bold">{{ worker.cedula | number }}</span>, labora al servicio de esta compañía desde el {{ jobSelect.fechain
+                            | date:'d/M/yy' }} a la fecha, mediante un contrato de Obra o Labor Contratada desempeñando el cargo de <span class="fw-bold"> {{ jobSelect.name
+                            }} </span> en la empresa usuaria <span class="fw-bold">{{ jobSelect.bussiness.name }}</span>.
+                        </p>
+                        <br>
+
+                        <p class="text-justify">La presente se expide en la ciudad de Bucaramanga a solicitud del trabajador {{ worker.name }} dirigida a QUIEN INTERESE, con fecha {{ dateActual | date:'d, MMMM, y' }}.</p>
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <p>Atentamente,</p>
+                        <br>
+                        <br>
+                        <br>
+
+                        <div>
+                            <div>
+                                <div style="max-width: 200px; border-bottom: 2px solid #dcdcdc;">
+                                    <img src="../../../assets/img/logo/firma.jpg" style="max-width: 150px; margin: auto;" alt="">
+                                </div>
+                                <div>
+                                    <p class="mb-0">YURY MARCELA ESCALANTE</p>
+                                    <p class="mb-0">Coordinadora de Gestión Humana</p>
+                                    <p class="mb-0">Tel. 3245173063</p>
+                                    <p class="mb-0">gestion.humana@fortalezasas.com</p>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

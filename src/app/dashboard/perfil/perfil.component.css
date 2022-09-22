@@ -9,3 +9,7 @@
 .btnImg:hover>div {
     display: block;
 }
+
+.text-justify {
+    text-align: justify;
+}
