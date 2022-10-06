@@ -248,7 +248,7 @@
                                 <tr *ngFor="let file of worker.attachments; let i = index">
                                     <th scope="row"> {{ i +1 }} </th>
                                     <td> {{ file.desc }} </td>
-                                    <td> {{ file.fecha | date:'short' }} </td>
+                                    <td> {{ file.fecha | fecha }} </td>
                                     <td>
                                         <span *ngIf="!file.status" class="badge text-bg-danger">Rechazada</span>
                                         <span *ngIf="!file.approved && file.status" class="badge text-bg-warning">Pendiente</span>
@@ -296,7 +296,7 @@
                                     <th scope="row"> {{ job.control}} </th>
                                     <td> {{ job.bussiness.name }} </td>
                                     <td> {{ job.sueldo | currency: 'COP' }} </td>
-                                    <td> {{ job.fechain | date:'short' }} </td>
+                                    <td> {{ job.fechain | fecha }} </td>
                                     <td>
                                         <button (click)="selectJob(job)" type="button" class="btn btn-sm btn-outline-primary border-0" data-bs-toggle="modal" data-bs-target="#certificado"> 
                                             <i class="bi bi-award"></i> 
@@ -544,7 +544,7 @@
                         <br>
                         <p class="text-justify ">
                             El colaborador (a) <span class="fw-bold">{{ worker.name }}</span>, con Cédula de Ciudadanía número <span class="fw-bold">{{ worker.cedula | number }}</span>, labora al servicio de esta compañía desde el {{ jobSelect.fechain
-                            | date:'d/M/yy' }} a la fecha, mediante un contrato de Obra o Labor Contratada desempeñando el cargo de <span class="fw-bold"> {{ jobSelect.name
+                            | fecha }} a la fecha, mediante un contrato de Obra o Labor Contratada desempeñando el cargo de <span class="fw-bold"> {{ jobSelect.name
                             }} </span> en la empresa usuaria <span class="fw-bold">{{ jobSelect.bussiness.name }}</span>.
                         </p>
                         <br>

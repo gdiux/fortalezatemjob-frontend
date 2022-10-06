@@ -418,14 +418,13 @@ export class PerfilComponent implements OnInit {
         .subscribe( ({entrevistas}) => {
 
           this.entrevistas = entrevistas;
-          console.log(entrevistas);
           
         });
 
   }
 
   /** ================================================================
-   *   CONFIRMAR ENTREVISTA ENTREVISTA
+   *   CONFIRMAR ENTREVISTA ENTREVISTAS
   ==================================================================== */
   confirmarEntrevista(status: boolean, id: string){
 
