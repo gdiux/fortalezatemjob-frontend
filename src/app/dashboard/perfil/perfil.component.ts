@@ -160,12 +160,17 @@ export class PerfilComponent implements OnInit {
   public subirArchivo!: File;
   public imgProducto: string = 'no-image';
   public loading: boolean = false;
+  public tipeD =  ['EPS', 'Caja de Compensacion'];
+  @ViewChild('tipo')          tipo!: ElementRef;
+  @ViewChild('parentesco')    parentesco!: ElementRef;
+  @ViewChild('numero')        numero!: ElementRef;
+  @ViewChild('beneficiario')  beneficiario!: ElementRef;
 
-  subirArch(desc: any ): any{
-
+  subirArch(desc: any, tipo: string = '', parentesco: string = 'n/a', numero: string = '', beneficiario: string = 'No' ): any{
+    
     this.loading = true;
     
-    this.fileUploadService.updateFiles( this.subirArchivo, this.typeFile, desc, this.worker.wid)
+    this.fileUploadService.updateFiles( this.subirArchivo, this.typeFile, desc, this.worker.wid, tipo, parentesco, numero, beneficiario)
     .then( data => {  
     
 
@@ -185,6 +190,10 @@ export class PerfilComponent implements OnInit {
       
       Swal.fire('Estupendo', 'Se ha guardado el archivo exitosamente!', 'success');
 
+      this.tipo.nativeElement.value = '';
+      this.parentesco.nativeElement.value = '';
+      this.numero.nativeElement.value = '';
+      this.beneficiario.nativeElement.value = '';
       
     });
     
@@ -232,8 +241,7 @@ export class PerfilComponent implements OnInit {
     
     this.subirImagen = file.target.files[0];
     
-    if (!this.subirImagen) { return this.imgTempP = null }
-    
+    if (!this.subirImagen) { return this.imgTempP = null }    
     
     const reader = new FileReader();
     const url64 = reader.readAsDataURL(file.target.files[0]);

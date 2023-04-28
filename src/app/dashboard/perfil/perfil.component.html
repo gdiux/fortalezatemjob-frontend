@@ -427,8 +427,20 @@
             </div>
             <div class="modal-body">
 
+                <div class="alert alert-danger" role="alert" *ngIf="worker.barrio.length === 0">
+                    <h4 class="alert-heading">Atención!</h4>
+                    <p>Debes de actualizar tu perfil para poder subir los archivos</p>
+                    <hr>
+                    <button (click)="edit()" type="button" style="background: none;" class="border-0 btn-sm ms-auto py-0 text-danger fw-bold" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Actualizar perfil</button>
+                </div>
+
+                <div *ngIf="desc.value === 'Caja de Compensacion' || desc.value === 'EPS'" class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">Importante!</h4>
+                    <p>Si tienes algún beneficiario en Caja de compensación o EPS debes de agregar los documentos</p>
+                </div>
+
                 <label for="descc"> Tipo de documento </label>
-                <select id="descc" class="form-select" aria-label="Default select example" #desc>
+                <select id="descc" class="form-select mb-3" aria-label="Default select example" #desc (change)="desc">
                     <option value="Cedula Ciudadania">Cedula Ciudadania</option>
                     <option value="Hoja de vida">Hoja de vida</option>
                     <option value="Registro Civil">Registro Civil</option>
@@ -444,13 +456,33 @@
                     <option value="Pruebas Psicotecnicas">Pruebas Psicotecnicas</option>
                 </select>
 
+                <div class="mb-3" [ngClass]="{'d-block': tipeD.includes(desc.value), 'd-none': !tipeD.includes(desc.value)}">
+                    <label for="tipo" class="form-label">Tipo de {{ desc.value }}</label>
+                    <input type="text" class="form-control" id="tipo" placeholder="Tipo de {{ desc.value }}" #tipo>
+                </div>
+
+                <div [ngClass]="{'d-block': tipeD.includes(desc.value), 'd-none': !tipeD.includes(desc.value)}" class="mb-3 d-none">
+                    <label for="beneficiario" class="form-label">Beneficiario</label>
+                    <input type="text" class="form-control" id="beneficiario" placeholder="Beneficiario" #beneficiario>
+                </div>
+
+                <div [ngClass]="{'d-block': tipeD.includes(desc.value), 'd-none': !tipeD.includes(desc.value)}" class="mb-3 d-none">
+                    <label for="numero" class="form-label">Numero de documento</label>
+                    <input type="text" class="form-control" id="numero" placeholder="Numero de documento" #numero>
+                </div>
+
+                <div [ngClass]="{'d-block': tipeD.includes(desc.value), 'd-none': !tipeD.includes(desc.value)}" class="mb-3 d-none">
+                    <label for="parentesco" class="form-label">Parentesco</label>
+                    <input type="text" class="form-control" id="parentesco" placeholder="Parentesco" #parentesco>
+                </div>
+
                 <div class="d-flex flex-row flex-wrap gap-2 justify-content-center mt-2">
 
                     <div>
                         <input #file type="file" class="form-control" name="" id="" placeholder="" (change)="selecArch($event.target)">
                     </div>
 
-                    <button [disabled]="loading" (click)="subirArch(desc.value)" type="button" name="" id="" class="btn btn-primary btn-sm">
+                    <button [disabled]="loading || worker.barrio.length === 0" (click)="subirArch(desc.value, tipo.value, parentesco.value, numero.value, beneficiario.value)" type="button" name="" id="" class="btn btn-primary btn-sm">
                         <span *ngIf="!loading">                            
                             Guardar
                         </span>

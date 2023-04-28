@@ -11,15 +11,18 @@
 
 /**
  * 
- base_url: 'http://localhost:3000/api',
- local_url: 'http://localhost:4200',
+  base_url: 'http://localhost:3000/api',
+  local_url: 'http://localhost:4200',
+
+  base_url: 'https://grupofortalezasas.com/api',
+  local_url: 'https://grupofortalezasas.com',
 
  */
 
 export const environment = {
   production: false,
-  base_url: 'https://grupofortalezasas.com/api',
-  local_url: 'https://grupofortalezasas.com',
+  base_url: 'http://localhost:3000/api',
+  local_url: 'http://localhost:4200',
 };
 
 /*
