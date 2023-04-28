@@ -166,8 +166,23 @@ export class PerfilComponent implements OnInit {
   @ViewChild('numero')        numero!: ElementRef;
   @ViewChild('beneficiario')  beneficiario!: ElementRef;
 
-  subirArch(desc: any, tipo: string = '', parentesco: string = 'n/a', numero: string = '', beneficiario: string = 'No' ): any{
+  subirArch(desc: any, tipo: string = 'No', parentesco: string = 'No', numero: string = 'No', beneficiario: string = 'No' ): any{
     
+    console.log('tipo: ',tipo.length);
+    console.log('parentesco: ',parentesco.length);
+    console.log('numero: ',numero.length);
+    console.log('beneficiario: ',beneficiario.length);
+    
+
+    if (  this.tipeD.includes(tipo) ||
+          tipo.length === 0 ||
+          parentesco.length === 0 ||
+          numero.length === 0 ||
+          beneficiario.length === 0) {
+      Swal.fire('Atención!', 'Todos los datos son importantes', 'info');
+      return;
+    }
+
     this.loading = true;
     
     this.fileUploadService.updateFiles( this.subirArchivo, this.typeFile, desc, this.worker.wid, tipo, parentesco, numero, beneficiario)
@@ -190,10 +205,10 @@ export class PerfilComponent implements OnInit {
       
       Swal.fire('Estupendo', 'Se ha guardado el archivo exitosamente!', 'success');
 
-      this.tipo.nativeElement.value = '';
-      this.parentesco.nativeElement.value = '';
-      this.numero.nativeElement.value = '';
-      this.beneficiario.nativeElement.value = '';
+      this.tipo.nativeElement.value = 'No';
+      this.parentesco.nativeElement.value = 'No';
+      this.numero.nativeElement.value = 'No';
+      this.beneficiario.nativeElement.value = 'No';
       
     });
     

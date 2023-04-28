@@ -458,22 +458,22 @@
 
                 <div class="mb-3" [ngClass]="{'d-block': tipeD.includes(desc.value), 'd-none': !tipeD.includes(desc.value)}">
                     <label for="tipo" class="form-label">Tipo de {{ desc.value }}</label>
-                    <input type="text" class="form-control" id="tipo" placeholder="Tipo de {{ desc.value }}" #tipo>
+                    <input type="text" value="No" class="form-control" id="tipo" placeholder="Tipo de {{ desc.value }}" #tipo>
                 </div>
 
                 <div [ngClass]="{'d-block': tipeD.includes(desc.value), 'd-none': !tipeD.includes(desc.value)}" class="mb-3 d-none">
                     <label for="beneficiario" class="form-label">Beneficiario</label>
-                    <input type="text" class="form-control" id="beneficiario" placeholder="Beneficiario" #beneficiario>
+                    <input type="text" value="No" class="form-control" id="beneficiario" placeholder="Beneficiario" #beneficiario>
                 </div>
 
                 <div [ngClass]="{'d-block': tipeD.includes(desc.value), 'd-none': !tipeD.includes(desc.value)}" class="mb-3 d-none">
                     <label for="numero" class="form-label">Numero de documento</label>
-                    <input type="text" class="form-control" id="numero" placeholder="Numero de documento" #numero>
+                    <input type="text" value="No" class="form-control" id="numero" placeholder="Numero de documento" #numero>
                 </div>
 
                 <div [ngClass]="{'d-block': tipeD.includes(desc.value), 'd-none': !tipeD.includes(desc.value)}" class="mb-3 d-none">
                     <label for="parentesco" class="form-label">Parentesco</label>
-                    <input type="text" class="form-control" id="parentesco" placeholder="Parentesco" #parentesco>
+                    <input type="text" value="No" class="form-control" id="parentesco" placeholder="Parentesco" #parentesco>
                 </div>
 
                 <div class="d-flex flex-row flex-wrap gap-2 justify-content-center mt-2">
@@ -482,7 +482,7 @@
                         <input #file type="file" class="form-control" name="" id="" placeholder="" (change)="selecArch($event.target)">
                     </div>
 
-                    <button [disabled]="loading || worker.barrio.length === 0" (click)="subirArch(desc.value, tipo.value, parentesco.value, numero.value, beneficiario.value)" type="button" name="" id="" class="btn btn-primary btn-sm">
+                    <button [disabled]="loading || worker.barrio.length === 0" (click)="subirArch(desc.value, tipo.value || 'No', parentesco.value || 'No', numero.value || 'No', beneficiario.value || 'No')" type="button" name="" id="" class="btn btn-primary btn-sm">
                         <span *ngIf="!loading">                            
                             Guardar
                         </span>

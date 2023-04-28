@@ -65,10 +65,10 @@ export class FileUploadService {
     type: 'img' | 'archivos' ,
     desc: 'Pruebas Psicotecnicas' | 'Examen Medico' |'Cedula Ciudadania' | 'Hoja de vida' | 'Registro Civil' | 'Registro de Matrimonio' | 'EPS' | 'Pensiones' | 'Cesantias' | 'Banco' | 'Caja de Compensacion' | 'RUT' | 'Antecedentes',
     wid: string,
-    tipo: string = '', 
-    parentesco: string = '', 
-    numero: string = '',
-    beneficiario: string = 'No',
+    tipo: string, 
+    parentesco: string, 
+    numero: string,
+    beneficiario: string,
   ){
       
       const url = `${base_url}/uploads/files/${type}/${desc}/${wid}/${tipo}/${parentesco}/${numero}/${beneficiario}`;
