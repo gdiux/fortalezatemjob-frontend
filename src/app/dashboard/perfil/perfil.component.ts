@@ -168,12 +168,6 @@ export class PerfilComponent implements OnInit {
 
   subirArch(desc: any, tipo: string = 'No', parentesco: string = 'No', numero: string = 'No', beneficiario: string = 'No' ): any{
     
-    console.log('tipo: ',tipo.length);
-    console.log('parentesco: ',parentesco.length);
-    console.log('numero: ',numero.length);
-    console.log('beneficiario: ',beneficiario.length);
-    
-
     if (  this.tipeD.includes(tipo) ||
           tipo.length === 0 ||
           parentesco.length === 0 ||

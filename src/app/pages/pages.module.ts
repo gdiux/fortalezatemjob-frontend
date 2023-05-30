@@ -16,6 +16,7 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { TrabajadoresComponent } from './trabajadores/trabajadores.component';
 import { EmpresasComponent } from './empresas/empresas.component';
 import { RegisterComponent } from './register/register.component';
+import { PolicyComponent } from './policy/policy.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { RegisterComponent } from './register/register.component';
         TrabajadoresComponent,
         EmpresasComponent,
         RegisterComponent,
+        PolicyComponent,
     ],
     exports: [
         HomeComponent,

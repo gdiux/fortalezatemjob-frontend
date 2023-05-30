@@ -8,6 +8,7 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { TrabajadoresComponent } from './trabajadores/trabajadores.component';
 import { EmpresasComponent } from './empresas/empresas.component';
 import { RegisterComponent } from './register/register.component';
+import { PolicyComponent } from './policy/policy.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'conocenos', component: ConocenosComponent, data:{ title: 'Conocenos' } },
     { path: 'contacto', component: ContactoComponent, data:{ title: 'Contacto' } },
     { path: 'registrarse', component: RegisterComponent, data:{ title: 'Registrate' } },
+    { path: 'policy', component: PolicyComponent, data:{ title: 'Politicas de Privacidad' } },
     { path: 'portal/trabajadores', component: TrabajadoresComponent, data:{ title: 'Portal de trabajadores' } },
     { path: 'portal/empresas', component: EmpresasComponent, data:{ title: 'Portal de empresas' } },
     
