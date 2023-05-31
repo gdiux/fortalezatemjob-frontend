@@ -344,21 +344,21 @@
                         </div>
 
                         <div class="form-floating mb-3 ">
-                            <input formControlName="city" type="text" class="form-control" id="floatingInputCity" placeholder="Ciudad">
+                            <input formControlName="city" [ngClass]="{'is-invalid': validateForm('city'), 'is-valid': validateForm('city') === false && formSubmited}" type="text" class="form-control" id="floatingInputCity" placeholder="Ciudad">
                             <label for="floatingInputCity">City</label>
                         </div>
                         <div class="form-floating mb-3 ">
-                            <input formControlName="department" type="text" class="form-control" id="floatingInputDepartment" placeholder="Departamento">
+                            <input formControlName="department" [ngClass]="{'is-invalid': validateForm('department'), 'is-valid': validateForm('department') === false && formSubmited}" type="text" class="form-control" id="floatingInputDepartment" placeholder="Departamento">
                             <label for="floatingInputDepartment">Departamento</label>
                         </div>
 
                         <div class="form-floating mb-3 ">
-                            <input formControlName="address" [ngClass]="{'is-invalid': validateForm('address')}" type="text" class="form-control" id="floatingInputAddress" Dirección="Dirección">
+                            <input formControlName="address" [ngClass]="{'is-invalid': validateForm('address'), 'is-valid': validateForm('address') === false && formSubmited}" type="text" class="form-control" id="floatingInputAddress" Dirección="Dirección">
                             <label for="floatingInputAddress">Dirección</label>
                         </div>
 
                         <div class="form-floating mb-3 ">
-                            <input formControlName="barrio" [ngClass]="{'is-invalid': validateForm('barrio')}" type="text" class="form-control" id="floatingInputBarrio" Dirección="Barrio">
+                            <input formControlName="barrio" [ngClass]="{'is-invalid': validateForm('barrio'), 'is-valid': validateForm('barrio') === false && formSubmited}" type="text" class="form-control" id="floatingInputBarrio" Dirección="Barrio">
                             <label for="floatingInputBarrio">Barrio</label>
                         </div>
 
@@ -427,12 +427,14 @@
             </div>
             <div class="modal-body">
 
-                <div class="alert alert-danger" role="alert" *ngIf="worker.barrio.length === 0">
-                    <h4 class="alert-heading">Atención!</h4>
-                    <p>Debes de actualizar tu perfil para poder subir los archivos</p>
-                    <hr>
-                    <button (click)="edit()" type="button" style="background: none;" class="border-0 btn-sm ms-auto py-0 text-danger fw-bold" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Actualizar perfil</button>
-                </div>
+                <ng-container *ngIf="!worker.barrio">
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Atención!</h4>
+                        <p>Debes de actualizar tu perfil para poder subir los archivos</p>
+                        <hr>
+                        <button (click)="edit()" type="button" style="background: none;" class="border-0 btn-sm ms-auto py-0 text-danger fw-bold" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Actualizar perfil</button>
+                    </div>
+                </ng-container>
 
                 <div *ngIf="desc.value === 'Caja de Compensacion' || desc.value === 'EPS'" class="alert alert-info" role="alert">
                     <h4 class="alert-heading">Importante!</h4>
@@ -482,7 +484,15 @@
                         <input #file type="file" class="form-control" name="" id="" placeholder="" (change)="selecArch($event.target)">
                     </div>
 
-                    <button [disabled]="loading || worker.barrio.length === 0" (click)="subirArch(desc.value, tipo.value || 'No', parentesco.value || 'No', numero.value || 'No', beneficiario.value || 'No')" type="button" name="" id="" class="btn btn-primary btn-sm">
+
+
+                    <button *ngIf="!worker.barrio" disabled type="button" name="" id="" class="btn btn-primary btn-sm">
+                        <span>                            
+                            Guardar
+                        </span>
+                    </button>
+
+                    <button *ngIf="worker.barrio" [disabled]="loading" (click)="subirArch(desc.value, tipo.value || 'No', parentesco.value || 'No', numero.value || 'No', beneficiario.value || 'No')" type="button" name="" id="" class="btn btn-primary btn-sm">
                         <span *ngIf="!loading">                            
                             Guardar
                         </span>
