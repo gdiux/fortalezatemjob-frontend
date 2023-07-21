@@ -148,8 +148,11 @@ export class TrabajadoresComponent implements OnInit {
   }
 
   /** =============================================================
-   * RECUPERAR CONTRASEÑA
+   * ¨Pronto 
   =============================================================== */
+  pronto(){
+    Swal.fire('Pronto en App Store', '', 'success');
+  }
 
 
 

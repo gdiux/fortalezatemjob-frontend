@@ -564,7 +564,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="certificadoLabel">Certificado Laboral</h5>
-                <button type="button" (click)="downloadPDF()" class="btn btn-danger btn-sm ms-4">PDF</button>
+                <a *ngIf="jobSelect" download target="_blank" href="https://grupofortalezasas.com/api/jobs/certificado/{{jobSelect.jid!}}" class="btn btn-danger btn-sm ms-4">PDF</a>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -591,7 +591,7 @@
                         </p>
                         <br>
 
-                        <p class="text-justify">La presente se expide en la ciudad de Bucaramanga a solicitud del trabajador {{ worker.name }} dirigida a QUIEN INTERESE, con fecha {{ dateActual | date:'d, MMMM, y' }}.</p>
+                        <p class="text-justify">La presente se expide en la ciudad de <span class="text-capitalize">{{ worker.city || 'Bucaramanga' }}</span> a solicitud del trabajador {{ worker.name }} dirigida a QUIEN INTERESE, con fecha {{ dateActual | date:'d, MMMM, y' }}.</p>
 
                         <br>
                         <br>

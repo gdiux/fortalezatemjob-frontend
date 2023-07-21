@@ -181,8 +181,8 @@ export class EmpresasComponent implements OnInit {
     this.bussinssService.createBussiness(this.registerForm.value)
         .subscribe( ({ bussiness }) => {
 
+          this.formSubmited = false;
           this.registerForm.reset();
-
           Swal.fire('Estupendo', `Se ha registrado correctamente en nuestro portal de empresas`, 'success');
           
 
